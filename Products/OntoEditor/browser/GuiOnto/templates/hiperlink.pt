@@ -1,0 +1,7 @@
+<metal:main define-macro="hiperlink">
+<tal:block >
+<a tal:attributes="href obj/absolute_url" tal:content="python:obj.title_or_id()"></a>
+</tal:block>
+</metal:main>
+
+

@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<metal:javascriptslot fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.form.js"></script>
+	<script type="text/javascript" src="++resource++ind_main.js"></script>
+	<script type="text/javascript">
+
+    </script>
+ </metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/ind_add.css" />
+  </metal:css_macro> 	  
+
+<body>
+<metal:main fill-slot="main">
+        <!-- header, H1 with title in it -->
+        <metal:header define-macro="header">
+        </metal:header>
+        <!-- body macro where all the fields are -->
+<metal:body define-macro="body" tal:define='cls python:view.getParentsList(); 
+											cdata python:context.getDataProps();
+											codata python:context.getObjectProps();'>
+<form 
+tal:attributes="method string:get; class string:edit-form; action string:${context/absolute_url}/${view/__name__}" i18n:translate="class_backref">
+  
+<fieldset>
+	<legend tal:content="string:Identification"></legend>    
+	<div tal:attributes="class string:field">
+		<table tal:attributes="id string:table_total; border string:1" tal:define="ref python:view.getBackRef()">
+		<tr tal:repeat="obj ref">
+			<td> <a tal:attributes="href obj/absolute_url" tal:content="obj/title_or_id">Id </a> </td>
+		    <td> 
+		    	<tal:cond tal:condition="python:obj.getSubClassOf()">
+		    		<span tal:define="cls python:obj.getSubClassOf()[0]">
+
+		    	<a tal:attributes="href cls/absolute_url" tal:content="cls/title_or_id">Id </a>
+		    </span>
+		    	</tal:cond>
+		    </td>
+		</tr>
+
+		</table>
+	</div>
+</fieldset>
+</form>
+</metal:body>
+</metal:main>
+</body>
+</html>

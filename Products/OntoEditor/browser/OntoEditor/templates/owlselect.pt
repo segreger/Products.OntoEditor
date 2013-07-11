@@ -1,0 +1,76 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+	  
+<metal:javascriptslot fill-slot="javascript_head_slot">
+<script type="text/javascript"> 
+jq.noConflict();
+jq(document).ready(function(){
+    jq('#sel_spec').change(function() {
+	document.location = jq('#sel_spec option:selected').val();
+	
+});	
+	   
+});
+</script>
+</metal:javascriptslot> 
+
+ <metal:css_macro metal:define-macro="css">
+
+ </metal:css_macro>	  
+<body>
+<metal:main fill-slot="main">
+        <!-- header, H1 with title in it -->
+        <metal:header define-macro="header">
+        </metal:header>
+        <!-- body macro where all the fields are -->
+<metal:body define-macro="body">
+<div id="ontolist" tal:define="list_s python:view.list_ontology()" >
+		<ul tal:condition="list_s" >
+		<li tal:repeat="item list_s"><a  tal:attributes="href python:(item.absolute_url()+'/owlselect?ontouid='+str(item.UID()))" tal:content="python:item.title_or_id()" >item_content</a></li>
+	</ul>
+</div>
+<hr />
+
+<div id="owlclasslist" tal:condition="request/ontouid|nothing" tal:define="m request/ontouid|nothing; rel_list python:view.container_content(m)">
+<ul>
+<li tal:repeat="i rel_list"><a tal:attributes="href python:(i.absolute_url()+'/owlselect?ontouid='+m+'&classuid='+str(i.UID()))" tal:content="python:i.title_or_id()">title ontoClass</a>
+</li>
+</ul>
+</div>
+
+<!--
+<div id="subclasslist" tal:define="m request/objuid|nothing; rel_list python:view.list_subclass(m)">
+<ul>
+<li tal:repeat="i rel_list"><a tal:attributes="href i/absolute_url" tal:content="python:i.title_or_id()">title subClass</a>
+</li>
+</ul>
+</div>
+-->
+<hr />
+
+<div id="dataproplist" tal:define="m request/ontouid|nothing; rel_list python:view.property_list('object')">
+<h3>ObjectProperty</h3>
+<ul tal:condition="rel_list">
+<li tal:repeat="i rel_list"><a tal:attributes="href python:(i.absolute_url()+'/owlselect?ontouid='+m+'&classuid='+str(i.UID()))" tal:content="python:i.title_or_id()">title ontoProperty</a>
+</li>
+</ul>
+</div>
+<div id="dataproplist" tal:define="m request/ontouid|nothing; rel_list python:view.property_list('value')">
+<h3>ValueProperty</h3>
+<ul tal:condition="rel_list">
+<li tal:repeat="i rel_list"><a tal:attributes="href python:(i.absolute_url()+'/owlselect?ontouid='+m+'&classuid='+str(i.UID()))" tal:content="python:i.title_or_id()">title ontoProperty</a>
+</li>
+</ul>
+</div>
+</metal:body>
+        <!-- folderlisting that shows sub-objects if there are any -->
+<metal:folderlisting define-macro="folderlisting">
+</metal:folderlisting>
+        <!-- footer, by line created date etc. -->
+<metal:footer define-macro="footer">
+</metal:footer>
+</metal:main>
+</body>
+</html>

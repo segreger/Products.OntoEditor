@@ -1,0 +1,9 @@
+<metal:main define-macro="panel">
+<tal:block >
+<div>
+<h2 tal:content="obj/title"></h2>
+</div>
+</tal:block>
+</metal:main>
+
+

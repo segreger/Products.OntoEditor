@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<object name="portal_factory" meta_type="Plone Factory Tool">
+ <factorytypes>
+  <type portal_type="Ontology"/>
+  <type portal_type="Ontolet"/>	
+  <type portal_type="OntoClass"/>
+  <type portal_type="OntoIndividual"/>
+  <type portal_type="ObjectProperty"/>
+  <type portal_type="DataProperty"/>
+  <type portal_type="IndObjectProperty"/>
+  <type portal_type="IndDataProperty"/>
+  <type portal_type="ClassObjectProperty"/>
+  <type portal_type="ClassDataProperty"/>
+  <type portal_type="ClassToIndObjectProperty"/>
+ </factorytypes>
+</object>

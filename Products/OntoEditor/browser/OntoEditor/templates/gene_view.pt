@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+	<div metal:fill-slot="main">
+	    <link href ="++resource++OntologyManager.css" rel="stylesheet" type="text/css" />
+		<!--<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/_docs/syntax/!script.js"></script>-->
+		<!--<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/jquery.jstree.js"></script>-->
+		<!--<script type="text/javascript" src="++resource++jstree.js"></script>-->
+		<h1 tal:content="string:Parent Classes Manager"></h1>
+		<div tal:define="classes context.ListOntoClasses">
+		<table>
+		<tr tal:repeat="item classes">
+			<td tal:content="item/title_or_id"></td>
+			<td tal:condition="python:context.getParent(item.Title)" tal:content="python:context.getParent(item.Title)"></td>
+			<td tal:condition="python:not context.getParent(item.Title)" tal:content="string:None"></td>
+		</tr>
+		</div>
+
+	</div>
+</body>
+</html>

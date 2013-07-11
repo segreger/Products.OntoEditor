@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+	  
+ 
+	  
+<metal:javascriptslot fill-slot="javascript_head_slot">
+<script tal:attributes="type string:text/javascript; src string:${portal_url}/++resource++ontoeditor.javascripts/ontoeditor.jquery.treeview.js"></script>
+<script  tal:attributes="type string:text/javascript; src string:${portal_url}/++resource++ontoeditor.javascripts/ontoeditor.jquery.cookie.js"></script>
+<script  tal:attributes="type string:text/javascript; src string:${portal_url}/++resource++ontoeditor.javascripts/main_tree.js"></script>
+</metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/jquery.treeview.css" />
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/screen_tree.css" />
+ </metal:css_macro> 
+
+<body>
+<div metal:fill-slot="main" tal:define="listTems python:context.listFolderContents(contentFilter={'portal_type' :'OntoClass'})">
+<!--style="display: none;"-->
+<div id="main">
+<h3 class="ff" >Json</h3>
+<ul id="black"></ul>
+</div>
+<div id="mess">hhhh</div>
+<div class="apple_overlay" id="overlay">
+
+	<!-- the external content is loaded inside this tag -->
+	<div class="contentWrap"></div>
+
+</div>
+<div id="main_tree">
+<ul id="browser" class="filetree treeview" tal:define="info python:view.list_subclasses('thing')">
+<li id="top_node"  class="node_tree">
+<span class="folder"  tal:content="string:Thing">title</span>
+</li>
+</ul>
+
+</div>
+
+</div>
+</body>
+</html>

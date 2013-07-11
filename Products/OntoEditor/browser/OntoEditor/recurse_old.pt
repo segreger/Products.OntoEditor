@@ -1,0 +1,16 @@
+<tal:master i18n:domain="plone">
+
+<metal:main define-macro="nav_main">
+
+<tal:block tal:define="par options/node; list_obj options/list_obj|nothing" >
+    <ul id="tree">
+      <div tal:repeat="nodeitem list_obj">jjjjjj
+<li tal:define="nodeid python:nodeitem.getId();conid python:context.getId();"
+ tal:attributes="id nodeid; class string:nodeli"
+ tal:content="python:nodeitem.title_or_id()">	
+      </li></div>
+    </ul>	
+
+</tal:block>
+</metal:main>
+</tal:master>

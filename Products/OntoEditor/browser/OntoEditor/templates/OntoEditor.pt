@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<div metal:fill-slot="main">
+    <!--<script src="++resource++ontoeditor.js/jquery.js" type="text/javascript"></script> -->
+    <script type="text/javascript" tal:content="view/new_oe_js"></script> 
+    <script src="++resource++ontoeditor.js/jquery.history.js" type="text/javascript"></script>
+    <script src="++resource++ontoeditor.js/jquery.color.js" type="text/javascript"></script>
+    <script src="++resource++ontoeditor.js/main_total.js" type="text/javascript"></script> 
+    <script src="++resource++ontoeditor.js/ontotools.js" type="text/javascript"></script>
+    <script src="++resource++ontoeditor.js/OntoUI.js" type="text/javascript"></script>
+    <script src="++resource++ontoeditor.js/OntoSelector.js" type="text/javascript"></script>
+   <script src="++resource++ontoeditor.js/OntologyEditor.js" type="text/javascript"></script>
+    <script src="++resource++ontoeditor.js/main_editor.js" type="text/javascript"></script> 
+    <!--<script src="++resource++ontoeditor.js/main.js" type="text/javascript"></script>-->
+
+    
+    <style type="text/css" media="all">@import url(++resource++ontoeditor.css/main.css);</style>
+    <div id="ontoEditor">
+      <div class="editorHeader"><h2></h2><p></p></div>
+      <div class="editorBody">
+        <div class="editorLeftPanel">
+          <dl class="tabbedBox">
+            <dt class="classes">Classes</dt>
+            <dd class="opened">
+              <div class="treeBoxWrap">
+                <div id="classesTreeBox" class="treeBox"></div>
+              </div>
+              <div class="newElementLink tClass" >
+                <div class="tImg"><span>+</span></div>
+                <a class="oClass">New class</a>
+              </div>
+            </dd>
+            <dt class="properties">Properties</dt>
+            <dd>
+              <dl class="subTabbedBox">
+                <dt>Object Properties</dt>
+                <dd>
+                  <div class="treeBoxWrap">
+                    <div id="opropsTreeBox" class="treeBox"></div>
+                  </div>
+                  <div class="newElementLink tOProp" >
+                    <div class="tImg"><span>+</span></div>
+                    <a class="oOProp">New object property</a>
+                  </div>
+                </dd>
+                <dt>Data Properties</dt>
+                <dd>
+                  <div class="treeBoxWrap">
+                    <div id="dpropsTreeBox" class="treeBox"></div>
+                  </div>
+                  <div class="newElementLink tDProp">
+                    <div class="tImg"><span>+</span></div>
+                    <a class="oDProp">New data property</a>
+                  </div>
+                </dd>
+              </dl>
+            </dd>
+            <dt class="individuals">Individuals</dt>
+            <dd>
+              <div class="treeBoxWrap">
+                <div id="individsTreeBox" class="treeBox"></div>
+              </div>
+              <div class="newElementLink tInd" >
+                <div class="tImg"><span>+</span></div>
+                <a class="oInd">New individual</a>
+              </div>
+            </dd>
+          </dl>
+        </div>
+        <div class="editorInfoBox">
+          <div class="infoBoxContent"></div>
+          <div id="mess"></div>
+        </div>
+      </div>
+      <div class="editorFooter"></div>
+    </div>
+
+</div>
+
+</body>
+</html>

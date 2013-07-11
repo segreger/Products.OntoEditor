@@ -1,0 +1,16 @@
+<tal:master i18n:domain="plone">
+
+<metal:main define-macro="nav_main">
+
+<tal:block tal:define="par options/node|nothing; list_obj options/list_obj|nothing" >
+    <ul tal:condition="list_obj" tal:attributes="id string:browser_${par}; class string:filetree treeview;">
+      <div tal:repeat="nodeitem list_obj">
+<li tal:define="nodeid python:nodeitem.getId();conid python:context.getId();"
+ tal:attributes="id nodeid; class string:node_tree">
+ 
+ <span class="folder"  tal:content="python:nodeitem.title_or_id()">title</span>
+      </li></div>
+    </ul>
+</tal:block>
+</metal:main>
+</tal:master>

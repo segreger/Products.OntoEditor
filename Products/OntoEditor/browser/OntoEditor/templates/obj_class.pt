@@ -1,0 +1,6 @@
+﻿<tal:block tal:condition="request/ontouid|nothing" tal:define="m request/ontouid|nothing; rel_list python:view.container_content(m)">
+<ul>
+<li tal:repeat="i rel_list"><a tal:attributes="href python:(i.absolute_url()+'/owlselect?ontouid='+m+'&classuid='+str(i.UID()))" tal:content="python:i.title_or_id()">title ontoClass</a>
+</li>
+</ul>
+</tal:block>

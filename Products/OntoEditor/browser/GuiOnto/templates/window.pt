@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+	  
+ 
+	  
+<metal:javascriptslot fill-slot="javascript_head_slot">
+</metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+ </metal:css_macro> 
+
+<body>
+<metal:content-core fill-slot="content-core">
+<tal:block tal:define="title options/title|nothing; objs options/objs|nothing" >
+
+<tal:block tal:condition="objs">
+<div tal:repeat="k objs">
+<tal:block tal:define="obj python:k[0]; adr python:k[1];">
+      <tal:block  metal:use-macro="python:path('%s/%s/macros/%s|nothing'%('context',k[1],k[1]))"> </tal:block>
+</tal:block>
+</div>
+</tal:block>
+</tal:block>
+
+</metal:content-core>
+</body>
+</html>

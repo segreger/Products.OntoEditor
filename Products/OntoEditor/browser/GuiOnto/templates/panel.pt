@@ -1,0 +1,20 @@
+<metal:main define-macro="panel">
+
+
+<tal:block tal:define="title options/title|nothing; objs options/objs|nothing" >
+
+<tal:block tal:condition="objs">
+<div tal:repeat="j objs">
+<tal:block tal:define="obj python:j[0]; adr python:j[1];">
+      <tal:block  metal:use-macro="python:path('%s/%s/macros/%s|nothing'%('context',j[1],j[1]))"> </tal:block>
+</tal:block>
+</div>
+</tal:block>
+</tal:block>
+
+
+
+
+</metal:main>
+
+

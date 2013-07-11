@@ -1,0 +1,12 @@
+<div id="sel_main_panel_left" >
+									
+    <div id="sel_div1" class="sel">	
+	<select tal:attributes="id string:sel_month1; class string:sel_month;" >		
+	<option>---</option> 
+	<tal:block tal:repeat="i python:view.getListMonth()">
+	<option tal:condition="python:i[1]==month1" tal:attributes="value  python:i[1]" tal:content= "python:i[0]" 							selected>	item_content</option>
+	<option tal:condition="python:not(i[1]==month1)" tal:attributes="value  python:i[1]" tal:content= "python:i[0]">						item_content</option>
+	</tal:block>
+	</select>
+	</div>
+</div>	

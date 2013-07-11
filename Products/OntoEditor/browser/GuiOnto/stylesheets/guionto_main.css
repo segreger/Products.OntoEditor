@@ -1,0 +1,637 @@
+.cf {
+	clear: both;
+}
+.b {
+	font-weight: bold;
+}
+
+#ontoEditor input,
+#ontoEditor textarea,
+#ontoEditor button {
+	font-family: Verdana;
+	font-size: 13px;
+	outline: none;
+}
+#ontoEditor .field,
+#ontoEditor button {
+	border: 1px solid #cccccc;
+	width: 300px;
+	padding: 2px 3px 3px;
+	margin: 0;
+}
+#ontoEditor button {
+	width: auto;
+	padding: 2px 5px 3px;
+	background-color: #f7f7f7;
+	cursor: pointer;
+}
+#ontoEditor button::-moz-focus-inner {
+  border: 0;
+}
+#ontoEditor button.link {
+	background-color: #fff;
+	border-color: #fff;
+	margin-left: 5px;
+	color: #777;
+}
+#ontoEditor button.link:hover {
+	text-decoration: underline;
+}
+
+#ontoEditor {
+	font-family: Verdana;
+	font-size: 13px;
+}
+#ontoEditor .editorHeader h2 {
+	font-size: 14px;
+	padding: 5px 0 2px;
+	margin: 0;
+}
+#ontoEditor .editorHeader p {
+	margin: 3px 10px 10px;
+}
+
+#ontoEditor .editorBody {
+	/*height: 500px;*/
+	overflow: hidden;
+	_zoom: 1; /* for ie6 */
+	border: 1px #ccc solid;
+}
+#ontoEditor .editorLeftPanel {
+	width: 250px;
+	/*height: 100%;*/
+	border-right: 1px #ccc solid;
+	float: left;
+	background-color: #fafafa;
+}
+#ontoEditor .editorRightPanel {
+	width: 250px;
+	/*height: 100%;*/
+	border-right: 1px #ccc solid;
+	float: right;
+	background-color: #fafafa;
+}
+#ontoEditor dl.tabbedBox {
+	margin: 0;
+	padding: 0;
+}
+#ontoEditor dl.tabbedBox dt {
+	margin: 0;
+	padding: 3px 5px;
+	background: #eeeeee;
+	font-size: 13px;
+	text-shadow: #fff 1px 1px 1px;
+	filter: Shadow(Color=#fff, Direction=45, Strength=1);
+	border-bottom: 1px #ccc solid;
+	cursor: pointer;
+}
+#ontoEditor dl.tabbedBox dd {
+	margin: 0;
+	border-bottom: 1px #ccc solid;
+	background-color: #fff;
+	overflow: hidden;
+	display: none;
+}
+#ontoEditor dl.tabbedBox dd.opened {
+	display: block;
+}
+#ontoEditor dl.subTabbedBox {
+	padding: 0;
+	margin: -1px 0 0 0;
+}
+#ontoEditor dl.subTabbedBox dt {
+	padding: 3px 10px;
+	background: #f7f7f7;
+	color: #666;
+	border-top: 1px #eee solid;
+	border-bottom: 1px #eee solid;
+}
+#ontoEditor dl.subTabbedBox dd {
+	border: none;
+	display: block;
+}
+
+#ontoEditor .treeBoxWrap {
+	/*max-height: 398px;*/
+	/*overflow: auto;*/
+	padding: 4px 0 3px 5px;
+}
+#ontoEditor .treeBox {
+	margin-left: -18px;
+}
+
+#ontoEditor .tList {
+	padding: 0;
+	margin: 0 0 0 19px;
+}
+.tList li {
+	list-style: none;
+}
+
+/* indent for all tree children excepts root */
+.tNode {
+	background-image: url(++resource++ontoeditor.images/i.gif);
+	background-position: top left;
+	background-repeat: repeat-y;
+	zoom: 1;
+}
+.tMinus .tLabel {
+	background: url(++resource++ontoeditor.images/i.gif) no-repeat 19px 17px;
+}
+.tPlus .tLabel,
+.tLeaf .tLabel {
+	background: none;
+}
+
+.tNode a:hover {
+	cursor: pointer;
+}
+li.selected .tLabel a {
+	font-weight: bold;
+}
+li.selected li .tLabel a {
+	font-weight: normal;
+}
+
+.isRoot {
+	margin-left: 0;
+}
+
+/* left vertical line (grid) for all nodes */
+.isLast {
+	background-image: url(++resource++ontoeditor.images/i_half.gif);
+	background-repeat: no-repeat;
+}
+
+.tMinus .tExp {
+	background-image: url(++resource++ontoeditor.images/expand_minus.gif);
+}
+
+/* closed is higher priority than open */
+.tPlus .tExp {
+	background-image: url(++resource++ontoeditor.images/expand_plus.gif);
+}
+
+/* highest priority */
+.tLeaf .tExp {
+	background-image: url(++resource++ontoeditor.images/expand_leaf.gif);
+}
+
+.tLabel {
+	/*height: 18px;*/
+	padding: 1px 1px 3px 40px;
+	cursor: pointer;
+}
+
+.tLabel a {
+	font-size: 13px;
+	vertical-align: top;
+	padding: 0;
+}
+
+.tExp {
+	width: 18px;
+	height: 18px;
+	float: left;
+}
+
+.tMinus .tList {
+	display: block;
+}
+
+.tPlus .tList {
+	display: none;
+}
+
+.tMinus .tExp,
+.tPlus .tExp {
+	cursor: pointer;
+}
+.tLeaf .tExp {
+	cursor: auto;
+}
+
+.tNode .tImg {
+	width: 18px;
+	height: 18px;
+	float: left;
+	cursor: pointer;
+}
+.tClass .tImg {
+	background: url('++resource++ontoeditor.images/class.gif') no-repeat center top;
+}
+.tOProp .tImg,
+.tDProp .tImg {
+	background: url('++resource++ontoeditor.images/prop.gif') no-repeat center top;
+}
+.tInd .tImg {
+	background: url('++resource++ontoeditor.images/ind.gif') no-repeat center top;
+}
+.tType .tImg,
+.tValue .tImg {
+	display: none;
+}
+.tEmpty .tImg {
+	background: none;
+}
+.isRoot {
+	margin-left: 0;
+}
+.tEmpty .tLabel {
+	color: #666666;
+	cursor: auto;
+}
+
+#ontoEditor input.search {
+	background: url(++resource++ontoeditor.images/search.png) no-repeat 5px 5px;
+	width: 283px;
+	padding-left: 20px;
+}
+#ontoEditor .searchResults {
+	position: absolute;
+	z-index: 100;
+	display: none;
+	overflow: auto;
+}
+#ontoEditor .searchResults .result {
+	padding: 5px;
+	border-bottom: 1px solid #eeeeee;
+	cursor: pointer;
+}
+#ontoEditor .searchResults .result .tImg {
+	float: left;
+	width: 18px;
+	height: 18px;
+}
+#ontoEditor .searchResults .result a {
+	margin-left: 5px;
+}
+#ontoEditor .searchResults .result em {
+	background-color: #FFE222;
+	font-style: inherit;
+	padding: 0 1px;
+}
+
+#ontoEditor div.select {
+	width: 306px;
+	padding: 0;
+	float: left;
+	overflow: hidden;
+}
+#ontoEditor div.select ul.array {
+	padding: 2px 1px 0;
+}
+#ontoEditor div.select ul.array li {
+	margin: 0 0 1px 0;
+	padding: 0 1px 2px 0;
+}
+#ontoEditor div.multi.select ul.array {
+	display: none;
+}
+#ontoEditor div.multi.select ul.array a {
+	padding: 1px 4px;
+	cursor: pointer;
+}
+#ontoEditor div.readonly.select {
+	background-color: #f7f7f7;
+}
+#ontoEditor div.readonly.select input.field {
+	display: none;
+}
+#ontoEditor div.select div.value {
+	padding: 2px 3px 3px;
+}
+#ontoEditor div.select div.value,
+#ontoEditor div.select ul.array {
+	cursor: text;
+}
+#ontoEditor div.readonly.select div.value,
+#ontoEditor div.readonly.select ul.array {
+	cursor: default;
+}
+#ontoEditor div.select ul.array a em {
+	font-size: 13px;
+	font-style: normal;
+	border-left: 1px dotted #ccc;
+	font-weight: bold;
+	padding-left: 3px;
+	margin-left: 4px;
+	color: #999999;
+}
+#ontoEditor div.select input.field {
+	margin: -1px;
+	border-top: 1px dotted #eee;
+}
+#ontoEditor div.select .searchResults {
+	margin: 0 -1px -1px;
+	border: 1px solid #ccc;
+	background: #fff;
+	width: 306px;
+	max-height: 270px;
+}
+#ontoEditor .searchResults .result.hover {
+	background: #f7f7f7;
+}
+
+#ontoEditor a.oClass,
+#ontoEditor a.oInd {
+	padding: 0 1px 1px;
+}
+#ontoEditor a.oClass,
+#ontoEditor a.oOProp,
+#ontoEditor a.oDProp,
+#ontoEditor a.oInd {
+	color: #000;
+	cursor: pointer;
+}
+
+#ontoEditor a.oType,
+#ontoEditor a.oValue {
+	background-color: #f3f3f3 !important;
+	/*border: 1px dotted #777;*/
+	font-size: 11px;
+	font-style: italic;
+	padding: 2px 4px;
+}
+#ontoEditor div.multi.select ul.array a.oType,
+#ontoEditor div.multi.select ul.array a.oValue {
+	padding: 2px 4px 1px;
+}
+#ontoEditor a.oValue {
+	background-color: #fafafa !important;
+	border: 1px solid #efefef !important;
+}
+#ontoEditor a.oClass {
+	background-color: #eef7ff !important;
+}
+#ontoEditor a.oOProp {
+	/*background-color: #f7f0ff;*/
+	background-color: transparent !important;
+	border-bottom: 1px solid #ae97c9 !important;
+}
+#ontoEditor a.oDProp {
+	/*background-color: #f8f1ff;*/
+	background-color: transparent !important;
+	border-bottom: 1px dotted #ae97c9 !important;
+}
+#ontoEditor a.oInd {
+	background-color: #fffce5 !important;
+}
+
+.tLabel span.cMenuArr {
+	background: url(++resource++ontoeditor.images/cm_arr.gif) no-repeat 5px 7px;
+	padding: 0 9px;
+	height: 18px; 
+	margin-left: 2px;
+	position: absolute;
+	cursor: pointer;
+	display: none;
+}
+.tLabel:hover span.cMenuArr {
+	display: inline;
+}
+
+#ontoEditor .editorInfoBox {
+	/*margin-left: 251px;*/
+	/*height: 100%;*/
+	/*overflow: auto;*/
+	overflow: hidden;
+	width: 400px;
+	float: left;
+}
+#ontoEditor .editorLeftPanel,
+{
+	padding-bottom: 50000px;
+	margin-bottom: -50000px;
+}
+#ontoEditor .editorInfoBox {
+	padding-bottom: 50000px;
+	margin-bottom: -50000px;
+	float:left;
+}
+#ontoEditor .editorLeftPanel .tabbedBox, .editorRightPanel,
+#ontoEditor .editorInfoBox .infoBoxContent {
+	padding-bottom: 75px;
+}
+#ontoEditor .editorInfoBox .infoBoxContent {
+	padding: 5px 7px;
+}
+
+#ontoEditor .editorInfoBox h4 {
+	margin: 3px 0;
+	padding: 0 5px 2px;
+	border-bottom: 1px #ccc solid;
+}
+#ontoEditor .editorInfoBox h4.sub {
+	color: #999;
+}
+#ontoEditor .editorInfoBox .header_links {
+	padding: 3px 2px 2px;
+	color: #333;
+	float: right;
+}
+#ontoEditor .editorInfoBox .header_links a {
+	color: #777;
+	padding: 0 3px;
+	cursor: pointer;
+}
+#ontoEditor .editorInfoBox .header_links a:hover {
+	text-decoration: underline;
+}
+#ontoEditor .editorInfoBox h5 {
+	font-size: 11px;
+	color: #777;
+	border-bottom: 1px solid #ccc;
+	margin: 10px 0 7px;
+	padding: 0 0 2px;
+	width: 400px;
+}
+
+#ontoEditor .editorInfoBox .contentBox {
+	padding: 10px;
+}
+#ontoEditor .editorInfoBox .contentBox div.empty {
+	color: #999;
+	padding: 5px 0 10px 15px;
+}
+
+#ontoEditor .editorInfoBox dl {
+	margin: 0;
+}
+
+#ontoEditor .editorInfoBox dl.info dt {
+	color: #999;
+	float: left;
+	width: 170px;
+}
+#ontoEditor .editorInfoBox dl.info dd {
+	margin: 0 0 5px;
+}
+#ontoEditor .editorInfoBox dl.props {
+	margin-bottom: 10px;
+}
+#ontoEditor .editorInfoBox dl.props dt {
+	float: left;
+	padding-right: 7px;
+	padding-left: 15px;
+	background: url('++resource++ontoeditor.images/b.gif') no-repeat 4px 7px;
+}
+#ontoEditor .editorInfoBox dl.props dd {
+	margin: 0 0 5px;
+}
+#ontoEditor .editorInfoBox dl.props dd {
+	margin: 0 0 5px;
+}
+#ontoEditor .editorInfoBox dl.edit dd .rightTip {
+	border-left: 1px dotted #CCC;
+	/*padding: 5px 11px;*/ padding: 0 11px;
+	/*margin-left: 12px;*/ margin-left: 490px;
+	/*float: left;*/
+	color: #777;
+	font-size: 11px;
+	font-style: italic;
+	/**/ line-height: 23px;
+}
+#ontoEditor .editorInfoBox dl.edit dd .rightTip a {
+	margin-right: 5px;
+	padding: 2px 3px;
+	cursor: auto;
+}
+#ontoEditor .editorInfoBox dl.edit dd .rightTip a.oOProp,
+#ontoEditor .editorInfoBox dl.edit dd .rightTip a.oDProp {
+	padding: 1px 2px;
+	/*margin-top: 1px;*/
+}
+#ontoEditor .editorInfoBox dl.edit dd .rightTip ul.array {
+	/*float: right;*/
+}
+#ontoEditor .editorInfoBox dl.edit dd .rightTip ul.array,
+#ontoEditor .editorInfoBox dl.edit dd .rightTip ul.array li {
+	/**/ float: none;
+	/**/ display: inline;
+	/**/ padding-right: 0;
+}
+#ontoEditor .editorInfoBox dl.edit dd .rightTip ul.array a {
+	margin-right: 0;
+}
+
+#ontoEditor .editorInfoBox dl.props dt .rightTip {
+}
+#ontoEditor .editorInfoBox dl.props dt .rightTip a {
+	margin-right: 7px;
+}
+#ontoEditor .editorInfoBox dl.props dt .rightTip a.oOProp,
+#ontoEditor .editorInfoBox dl.props dt .rightTip a.oDProp {
+}
+#ontoEditor .editorInfoBox dl.props dt .rightTip ul.array {
+}
+#ontoEditor .editorInfoBox dl.props dt .rightTip ul.array,
+#ontoEditor .editorInfoBox dl.props dt .rightTip ul.array li {
+	/**/ float: none;
+	/**/ display: inline;
+	/**/ padding-right: 0;
+}
+#ontoEditor .editorInfoBox dl.props dt .rightTip ul.array a {
+	margin-right: 0;
+}
+#ontoEditor .editorInfoBox ul.array {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: #777;
+}
+#ontoEditor .editorInfoBox ul.array li {
+	float: left;
+	padding-right: 5px;
+}
+#ontoEditor .editorInfoBox ul.array li.bottom {
+	float: none;
+	clear: both;
+	padding: 0;
+	margin: 0;
+}
+
+#ontoEditor .editorInfoBox dl.edit {
+	margin-bottom: 15px;
+}
+#ontoEditor .editorInfoBox dl.edit dt {
+	padding: 3px 0;
+}
+
+#ontoEditor .newElementLink {
+	border-top: 1px solid #eee;
+	font-size: 11px;
+	margin: 0;
+	padding: 5px 7px;
+	height: 15px;
+	cursor: pointer;
+}
+#ontoEditor .newElementLink:hover {
+	background-color: #f7f7f7;
+}
+#ontoEditor .newElementLink .tImg {
+	float: left;
+	width: 18px;
+	height: 18px;
+	text-indent: 9px;
+}
+#ontoEditor .newElementLink .tImg span {
+	font-size: 8px;
+	font-weight: bold;
+	vertical-align: sub;
+	color: #fff;
+	text-shadow: 1px 1px 0 #333;
+}
+#ontoEditor .newElementLink a {
+	font-style: italic;
+	margin-left: 5px;
+	float: left;
+}
+#ontoEditor .newElementLink a.oClass,
+#ontoEditor .newElementLink a.oInd {
+	padding: 1px 2px 2px;
+}
+#ontoEditor .newElementLink a.oOProp,
+#ontoEditor .newElementLink a.oDProp {
+	margin: 1px 2px 2px 5px;
+}
+
+/* for Plone */
+#ontoEditor .editorBody a:active {
+	color: #000;
+}
+#ontoEditor .field,
+#ontoEditor button {
+	background-image: none;
+}
+#ontoEditor .field {
+	clear: none;
+}
+#ontoEditor li {
+	margin: 0;
+}
+#ontoEditor a {
+	color: #000;
+}
+#ontoEditor h2 {
+	border: none;
+	font-weight: bold;
+}
+#ontoEditor dd a,
+#ontoEditor li a {
+	border: none;
+}
+#ontoEditor dd,
+#ontoEditor li {
+	line-height: 16px;
+}
+#ontoEditor .newElementLink a {
+	line-height: 13px;
+}
+#ontoEditor .newElementLink .tImg span {
+	line-height: 10px;
+}
+#ontoEditor dt {
+	font-weight: normal;
+}
+

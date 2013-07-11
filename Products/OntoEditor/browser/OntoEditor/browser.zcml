@@ -1,0 +1,315 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:plone="http://namespaces.plone.org/plone"
+           i18n_domain="OntoEditor">
+
+   <browser:page
+     for="*"
+     name="gene_view"
+     class="Products.OntoEditor.browser.OntoEditor.GeneView.gene_view"
+	 template="templates/gene_view.pt"
+     permission="zope2.View"
+     />
+		   
+   <browser:page
+     for="*"
+     name="manager"
+     class="Products.OntoEditor.browser.OntoEditor.OntologyManager.OntologyManager"
+     permission="zope2.View"
+     />
+   <browser:page
+     for="*"
+     name="taskmanager"
+     class="Products.OntoEditor.browser.OntoEditor.TaskManager.TaskManager"
+     permission="zope2.View"
+     />	 
+   <browser:page
+     for="*"
+     name="ontoview"
+     class="Products.OntoEditor.browser.OntoEditor.OntologyView.OntologyView"
+     permission="zope2.View"
+     />
+   <browser:page
+     for="*"
+     name="editor"
+     class="Products.OntoEditor.browser.OntoEditor.OntoEditor.OntoEditor"
+     permission="zope2.View"
+     />
+ <browser:page
+     for="Products.OntoEditor.interfaces.IOntology"
+     name="main_view"
+     class="Products.OntoEditor.browser.OntoEditor.main_view.main_view"
+     template="templates/main_view.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="tree_view"
+     class="Products.OntoEditor.browser.OntoEditor.tree_view.tree_view"
+     template="templates/tree_view.pt"
+     permission="zope2.View"
+     />
+
+ <browser:page
+     for="*"
+     name="recurse"
+     class="Products.OntoEditor.browser.OntoEditor.tree_view.recurse"
+     template="templates/recurse.pt"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="owlselect"
+     class="Products.OntoEditor.browser.OntoEditor.owltool.owlselect"
+     template="templates/owlselect.pt"
+     permission="zope2.View"
+     />		 
+
+  <browser:page
+     for="*"
+     name="obj_prop"
+     class="Products.OntoEditor.browser.OntoEditor.tree_view.tree_view"
+     template="templates/obj_prop.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="obj_class"
+     class="Products.OntoEditor.browser.OntoEditor.tree_view.tree_view"
+     template="templates/obj_class.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="onto_fullview"
+     class="Products.OntoEditor.browser.OntoEditor.owltool.onto_fullview"
+     template="templates/onto_fullview.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="ind_add"
+     class="Products.OntoEditor.browser.OntoEditor.ind_add.ind_add"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="ind_view"
+     class="Products.OntoEditor.browser.OntoEditor.ind_add.ind_view"
+     template="templates/ind_view.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="class_view"
+     class="Products.OntoEditor.browser.OntoEditor.class_operation.class_view"
+     template="templates/class_view.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="class_backref"
+     class="Products.OntoEditor.browser.OntoEditor.class_operation.class_view"
+     template="templates/class_backref.pt"
+     permission="zope2.View"
+     />
+
+  <browser:resourceDirectory
+     name="ontoeditor.templates"
+     directory="templates"
+     /> 
+  <browser:resourceDirectory
+     name="ontoeditor.css"
+     directory="css"
+     />
+  <browser:resourceDirectory
+     name="ontoeditor.images"
+     directory="images"
+     />
+<!--************************templates*******************************************-->
+
+<!--********************Java Scripts resurses**************************************-->	 
+   <browser:resourceDirectory
+     name="ontoeditor.js"
+     directory="js"
+     />
+  <browser:resource
+     name="ind_main.js"
+     file="js/ind_main.js"
+     />
+
+  <browser:resource
+     name="jquery.history.js"
+     file="js/jquery.history.js"
+     />
+  <browser:resource
+     name="jquery.color.js"
+     file="js/jquery.color.js"
+     />
+  <browser:resource
+     name="main.js"
+     file="js/main.js"
+     />
+
+<!--*********************************************** -->
+  <browser:resourceDirectory
+	 name="ontoeditor.javascripts"
+	 directory="javascripts"
+	 /> 
+  <browser:resource
+     name="jquery.jquery-ui.min.js"
+     file="javascripts/jquery-ui.min.js"
+     /> 
+
+  <browser:resource
+     name="jquery.tooltip.js"
+     file="javascripts/jquery.tooltip.js"
+     /> 
+ 	 
+  <browser:resource
+     name="ontoeditor.jquery.treeview.js"
+     file="javascripts/jquery.treeview.js"
+     /> 
+
+  <browser:resource
+     name="ontoeditor.jquery.cookie.js"
+     file="javascripts/jquery.cookie.js"
+     /> 
+  <browser:resource
+     name="ontoeditor.jquery.treeview.edit.js"
+     file="javascripts/jquery.treeview.edit.js"
+     />
+  <browser:resource
+     name="ontoeditor.jquery.treeview.async.js"
+     file="javascripts/jquery.treeview.async.js"
+     />      
+  <browser:resource
+     name="ontoeditor.main_tree.js"
+     file="javascripts/main_tree.js"
+     />
+<!---***********************For new OntoEditor total files -->
+  <browser:resource
+     name="main_total.js"
+     file="js/main_total.js"
+     />
+  <browser:resource
+     name="main_editor.js"
+     file="js/main_editor.js"
+     />
+  <browser:resource
+     name="ontotools.js"
+     file="js/ontotools.js"
+     />     
+  <browser:resource
+     name="OntoUI.js"
+     file="js/OntoUI.js"
+     />
+  <browser:resource
+     name="OntoSelector.js"
+     file="js/OntoSelector.js"
+     />
+  <browser:resource
+     name="OntologyEditor.js"
+     file="js/OntologyEditor.js"
+     />     
+<!--- ################For ontoeditor_tab###################################-->      
+  <browser:resource
+     name="ontoeditor.ontoeditor_tab.js"
+     file="javascripts/ontoeditor_tab.js"
+     />     
+  <browser:resource
+     name="jstree.js"
+     file="js/jquery.jstree.js"
+     />
+  <browser:resource
+     name="OntologyManager.js"
+     file="js/OntologyManager.js"
+     />
+  
+<!--- Stylesheets resurses**************************************************************** -->
+  <browser:resource
+     name="main.css"
+     file="css/main.css"
+     />
+  <browser:resource
+     name="ind_add.css"
+     file="stylesheets/ind_add.css"
+     />
+  <browser:resourceDirectory
+	 name="ontoeditor.stylesheets"
+	 directory="stylesheets"
+	 /> 
+
+ 
+ 
+<!---Image resurses **************************************************************************-->
+ 
+
+  <browser:resource
+     name="ontoeditor.bg.gif"
+     file="images/bg.gif"
+     />
+  <browser:resource
+     name="OntologyManager.css"
+     file="stylesheets/OntologyManager.css"
+     />
+  <browser:resource
+     name="jstree.css"
+     file="stylesheets/style.css"
+     />
+ 
+<!---Image resurses **************************************************************************-->
+ 
+  <browser:resource
+     name="d.gif"
+     file="images/d.gif"
+     />  
+  <browser:resource
+     name="d.png"
+     file="images/d.png"
+     />
+   <browser:resource
+     name="throbber.gif"
+     file="images/throbber.gif"
+     />  
+  <browser:resource
+     name="add.png"
+     file="images/add.png"
+     />
+	 <browser:resource
+     name="remove.png"
+     file="images/remove.png"
+     />
+	 <browser:resource
+     name="tableft.gif"
+     file="images/tableft.gif"
+     />
+	 <browser:resource
+     name="tabright.gif"
+     file="images/tabright.gif"
+     />
+	 <browser:resource
+     name="ObjectProperty.png"
+     file="images/ObjectProperty.png"
+     />
+	 <browser:resource
+     name="DataProperty.png"
+     file="images/DataProperty.png"
+     />
+	 <browser:resource
+     name="ind.gif"
+     file="images/ind.gif"
+     />
+	 <browser:resource
+     name="class.gif"
+     file="images/class.gif"
+     /> 
+  
+<!-- ##code-section BROWSER #fill in your manual code here -->
+<!-- ##/code-section BROWSER -->
+
+</configure>

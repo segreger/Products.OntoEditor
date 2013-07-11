@@ -1,0 +1,59 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           xmlns:plone="http://namespaces.plone.org/plone"
+           i18n_domain="OntoEditor">
+
+
+ 
+  <browser:resourceDirectory
+     name="guionto.templates"
+     directory="templates"
+     /> 
+
+  <browser:resourceDirectory
+     name="guionto.images"
+     directory="images"
+     />
+  <browser:resourceDirectory
+     name="guionto.js"
+     directory="js"
+     />
+  <browser:resourceDirectory
+     name="guionto.stylesheets"
+     directory="stylesheets"
+     /> 
+
+<!--************************templates*******************************************-->
+  <browser:page
+     for="*"
+     name="window"
+     class="Products.OntoEditor.browser.GuiOnto.window.window"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="panel"
+     template="templates/panel.pt"
+     permission="zope2.View"
+     />     
+  <browser:page
+     for="*"
+     name="hiperlink"
+     template="templates/hiperlink.pt"
+     permission="zope2.View"
+     />      
+<!--********************Java Scripts resurses**************************************-->	 
+
+
+<!--- Stylesheets resurses**************************************************************** -->
+  <browser:resource
+     name="guionto.guionto_main.css"
+     file="stylesheets/guionto_main.css"
+     />
+
+ 
+
+</configure>

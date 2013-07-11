@@ -1,0 +1,57 @@
+    """
+
+
+    def __call__(self):
+        #pdb.set_trace()
+        curse_check = self.request.form.get('curse_check', None)
+        self.request.set('disable_border', True)
+        postback = True
+        form = self.request.form
+        # Make sure we had a proper form submit, not just a GET request
+        submitted = form.get('form.submitted', False)
+        save_button = form.get('form.button.Save', None) is not None
+        cancel_button = form.get('form.button.Cancel', None) is not None
+
+        #obj=self.ObjByUID()
+        if submitted and not cancel_button:
+            # Update the acquire-roles setting
+            # Other buttons return to the sharing page
+            #pass
+            #obj=self.ObjByUID()
+            #pdb.set_trace()
+            valuid=self.request['valuid']
+            if valuid:
+                list_obj=self.context.portal_catalog.searchResults(UID=valuid)
+                if list_obj[0]:
+                    obj=list_obj[0].getObject()
+                    list_rel=obj.getList_disc()
+                    save_list=[]
+                    for i in curse_check:
+                        if not(i in list_rel):
+                            save_list.append(i)
+                    obj.setList_disc(save_list)
+                    self.request.response.redirect(obj.absolute_url())
+                else:
+                    obj=None
+            else:
+                obj=None
+
+            #if save_list:
+                #s=''
+                #for k in save_list:
+                #    s=s+k
+                #response = self.request.response
+                #return "<html><body>"+s+"</body></html>"
+
+        if save_button or cancel_button:
+            postback = False
+        if postback:
+            pass
+            #return self.template()
+        else:
+            if obj:
+                self.request.response.redirect(obj.absolute_url())
+            else:
+                self.request.response.redirect(self.context.absolute_url())
+       
+    """

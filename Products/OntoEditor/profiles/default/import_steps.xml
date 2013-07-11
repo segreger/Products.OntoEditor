@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<import-steps>
+
+ 
+
+
+ <import-step 
+    id="OntoEditor-Update-RoleMappings" 
+    handler="Products.OntoEditor.setuphandlers.updateRoleMappings"
+    title="Update Workflow role mappings for OntoEditor"
+    version="2011-06-15T00:40:52.309000">
+   <dependency step="OntoEditor-QI-dependencies"/>
+   updates the workflow role mappings for OntoEditor
+ </import-step>
+
+ <import-step 
+    id="OntoEditor-postInstall" 
+    handler="Products.OntoEditor.setuphandlers.postInstall"
+    title="manual coded post-install for OntoEditor"
+    version="2011-06-15T00:40:52.309000">
+   <dependency step="OntoEditor-QI-dependencies"/>
+   manual coded post-install for OntoEditor
+ </import-step>
+
+<!-- ##code-section ADDITIONALSTEPS -->
+<!-- ##/code-section ADDITIONALSTEPS -->
+
+</import-steps>
+ 

@@ -1,0 +1,20 @@
+<tal:master i18n:domain="plone">
+  <metal:main define-macro="tree_panel">
+    <div id="main_tree">
+      <ul id="browser" class="filetree treeview" tal:define="info python:view.list_subclasses('thing')">
+	<li id="top_node"  class="node_tree">
+	  <span class="folder"  tal:content="string:Thing">title</span>
+	<ul>
+	<li tal:attributes="id python:item.getId()" tal:repeat="item info"  class="node_tree">
+	  <span tal:define="item_id python:item.getId() " tal:attributes="class string:filder;"
+	  tal:content="python:item.title_or_id()">title</span>
+	</li>
+	</ul>
+	</li>
+      </ul>
+
+    </div>
+
+  </metal:main>
+</tal:master>
+

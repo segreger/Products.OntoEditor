@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<object name="portal_skins"
+        meta_type="Plone Skins Tool"
+        allow_any="False"
+        cookie_persistence="False"
+        request_varname="plone_skin">
+ <object name="ontoeditor_images"
+         meta_type="Filesystem Directory View"
+         directory="OntoEditor/skins/ontoeditor_images"/>
+ <object name="learncurse_styles"
+         meta_type="Filesystem Directory View"
+         directory="OntoEditor/skins/ontoeditor_styles"/>
+ <object name="learncurse_templates"
+         meta_type="Filesystem Directory View"
+         directory="OntoEditor/skins/ontoeditor_templates"/>
+ 
+ <skin-path name="*">
+  <layer insert-after="custom" 
+         name="ontoeditor_images"/>
+  <layer insert-after="custom" 
+         name="ontoeditor_styles"/>
+  <layer insert-after="custom" 
+         name="ontoeditor_templates"/>
+ </skin-path>
+
+</object>

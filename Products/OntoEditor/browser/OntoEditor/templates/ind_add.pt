@@ -1,0 +1,152 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<metal:javascriptslot fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.form.js"></script>
+	<script type="text/javascript" src="++resource++ind_main.js"></script>
+	<script type="text/javascript">
+
+    </script>
+ </metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/ind_add.css" />
+  </metal:css_macro> 	  
+
+<body>
+<metal:main fill-slot="main">
+        <!-- header, H1 with title in it -->
+        <metal:header define-macro="header">
+        </metal:header>
+        <!-- body macro where all the fields are -->
+<metal:body define-macro="body" tal:define='cls python:view.getParentsList(); 
+											cdata python:context.getDataProps();
+											codata python:context.getObjectProps();'>
+<form 
+tal:attributes="method string:get; class string:edit-form; action string:${context/absolute_url}/${view/__name__}" i18n:translate="ind_add">
+<input type="hidden" name="submitted" value="True" />
+<fieldset>
+	<legend tal:content="string:Add to ontology"></legend>
+	
+    <div tal:attributes="class string:field">
+		<div tal:attributes="class string:widget">
+			<div tal:attributes="class string:value">
+				  <select class="array" id="selonto" tal:define="ontolist python:view.list_ontologys().items()">
+				  	<tal:iflistind tal:condition="ontolist">
+						<tal:ioption tal:repeat="ind ontolist">
+							<option tal:attributes="value python:ind[1]" tal:content="python:ind[0]"></option>
+						</tal:ioption>
+					</tal:iflistind>
+				  </select>
+				  
+			</div>
+		</div>	
+    </div>
+</fieldset>    
+<fieldset>
+	<legend tal:content="string:Data and Object Properies"></legend>    
+	<div tal:attributes="class string:field">
+		<input tal:attributes="type string:hidden; name string:context_uid;  value python:context.UID()" />
+		<table tal:attributes="id string:table_total; border string:1">
+		<tr>
+			<td><label tal:attributes="for string:ind_id" tal:content="string:Id">Id</label></td>
+		    <td><input tal:attributes="type string:input; name string:ind_id" /></td>
+		</tr>
+		<tr>
+		<td><label tal:attributes="for string:title" tal:content="string:Title">Title</label></td>
+		<td><input tal:attributes="type string:input; name string:title" /></td>
+		</tr>
+		</table>
+	</div>
+	<div tal:attributes="class string:field">
+		<table tal:attributes="border string:1" >
+			<tal:class tal:repeat="c cls">
+
+				<tal:dataproplist tal:define="dprop1 python:view.ListDProp(c)" >
+					<tal:block tal:condition="dprop1">
+						<tr tal:repeat="it dprop1">
+							<td><a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+							</td>
+						<tal:if tal:condition="python:view.dPropRange(it)" tal:define="rang python:view.dPropRange(it)">
+							<td>
+							<a tal:attributes="href rang/absolute_url" tal:content= "rang/title_or_id">	item_content</a>
+							</td>
+							<td><input tal:attributes="type string:input; name string:dp_${it/id}" /></td>
+					    </tal:if>
+					    <tal:if tal:condition="python:not view.dPropRange(it)">
+							<td >
+							   <span tal:content="string:Nothing">	item_content</span>
+							</td>
+							<td>
+							 <span tal:content="string:Nothing">	item_content</span>
+							</td>
+					    </tal:if>
+						</tr>
+					</tal:block>
+				</tal:dataproplist>
+				<!--
+			</tal:class>
+			</table>
+			<br/>
+			<table tal:attributes="border string:1" >
+			<tal:class tal:repeat="c cls"> -->
+				<tal:objproplist tal:define="oprop python:c.getObjectProps(); ">
+					<tal:block tal:condition="oprop">
+						<tr tal:repeat="it oprop">
+							<!--ссылка на свойство -->
+								<td><a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a></td>
+							<tal:opropif tal:condition="python:view.dPropRange(it)"> 
+
+								<!--тип Range -->
+									<td tal:define="rang python:view.dPropRange(it)">
+										<a tal:attributes="href rang/absolute_url" tal:content= "rang/title_or_id">	item_content</a>
+									</td>
+
+								<!-- список Range -->	
+									<td tal:define="ouid python:it.UID(); list_ind python:view.vocabRange(ouid)">
+										<select tal:attributes="class string:array; name string:sel_${it/id}">
+											<tal:iflistind tal:condition="list_ind">
+												<tal:ioption tal:repeat="ind python:list_ind.items()">
+												<option tal:attributes="value python:ind[1]" tal:content="python:ind[0]"></option>
+										        </tal:ioption>
+										    </tal:iflistind>
+										</select>	
+									</td>
+					  		</tal:opropif>
+
+					  		<tal:opropif tal:condition="python:not view.dPropRange(it)"> 
+
+									<td>
+									    <span  tal:content="string:Nothing">	item_content</span>
+									</td>
+																	<!-- отсутствие  Range -->	
+									<td>
+									    <span  tal:content="string:Nothing">	item_content</span>
+									</td>
+									
+					  		</tal:opropif>
+
+						</tr>
+					</tal:block>
+				</tal:objproplist>	
+			</tal:class>
+
+		</table>
+	</div>
+</fieldset>	
+<fieldset>
+	<legend tal:content="string:Commands"></legend>
+<div tal:attributes="class string:formControls">
+	<span tal:attributes="class string:actionButtons">
+		<input tal:attributes="class string:context; type string:submit; value string:Save; name string:form.button.Save" />
+		<input tal:attributes="class string:context; type string:submit; value string:Cancel; name string:form.button.Cancel" />
+	</span>
+</div>
+</fieldset>
+</form>
+</metal:body>
+</metal:main>
+</body>
+</html>

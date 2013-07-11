@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+	  
+
+<body>
+<metal:main fill-slot="main">
+        <!-- header, H1 with title in it -->
+        <metal:header define-macro="header">
+        </metal:header>
+        <!-- body macro where all the fields are -->
+<metal:body define-macro="body" tal:define='c context; cdata python:view.getDataProps(); codata python:view.getObjectProps()'>
+
+<div>
+<h3 tal:content="python:c.title_or_id()"></h3>
+<div id="dataproplist" tal:define="classes python:view.getDataProps()" >
+		<ul tal:condition="classes" >
+		<li tal:repeat="item python:classes">
+		<span tal:content="item/title_or_id"></span>
+	    <a tal:attributes="href item/absolute_url" tal:content="item/title_or_id"></a>
+		</li>
+		<tal:block tal:condition="cdata">
+		<li tal:repeat="citem cdata">
+		<a tal:attributes="href citem/absolute_url" tal:content="citem/title_or_id"></a>
+		</li>
+		</tal:block>
+		
+		
+	</ul>
+</div>
+<div id="objproplist" tal:define="objprops python:c.getObjectProps()" >
+		<ul tal:condition="objprops" >
+		<li tal:repeat="item python:objprops">
+		<a tal:attributes="href item/absolute_url" tal:content="item/title_or_id"> </a>
+		</li>
+        </ul>
+        <ul tal:condition="codata">
+		<li tal:repeat="citem codata">
+		<span tal:content="citem/title_or_id"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+</div>
+</metal:body>
+</metal:main>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="Products.OntoEditor">
+
+    
+  <i18n:registerTranslations directory="locales" />
+  <include file="profiles.zcml" />
+
+
+  <include file="browser/browser.zcml"/>
+  <include file="browser/OntoEditor/browser.zcml"/>
+  <include file="browser/GuiOnto/guionto_browser.zcml"/>
+  <include file="browser/PageEdit/configure.zcml"/>
+  <!-- ##code-section configure.zcml -->
+  <!-- ##/code-section configure.zcml -->
+
+</configure>

@@ -1,0 +1,168 @@
+<tal:block metal:define-macro="master"
+           define="errors options/state/getErrors | python:{};
+                   
+                   allow_tabbing python:False;
+                   
+                   portal_type python:here.getPortalTypeName().lower().replace(' ', '_');
+
+
+                   portal portal | context/@@plone_portal_state/portal;" >
+    <!--
+                   disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                   disable_column_two python:request.set('disable_plone.rightcolumn',1);">
+
+-->                   
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneformgen">
+
+  <metal:head fill-slot="top_slot">
+
+  </metal:head>
+  
+  <metal:javascript_head fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.form.js"></script>      
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.overlay.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.scrollable.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.tabs.js"></script>
+    
+     <script type="text/javascript" >
+      jq(function() {
+    // setup ul.tabs to work as tabs for each div directly under div.panes
+    $("ul.mytabs").tabs("div.panes > div", {
+
+	// configuration variables
+	current: 'active',
+});
+})     
+           
+           
+     </script>
+<style type="text/css" media="screen, projection">
+#nav ul {
+    background-color: #75AD0A;
+    float: left;
+
+    list-style: none outside none;
+border-style: solid solid none;
+    margin: 0;
+    padding: 0;
+}
+#nav li {    display: inline;
+
+    margin: 0;
+    padding: 0;
+ }   
+#nav li a {
+    background: none repeat scroll 0 0 #DDDDDD;
+    border-right: 0.1em solid white;
+    
+    min-width: 6em;
+    width:10em;
+    padding: 0.5em 1em 2em;
+    white-space: normal;
+    
+    line-height: 1.5em;
+    margin-bottom: 0.25em;
+
+}
+#nav .selected a, #nav a:hover {
+    background: none repeat scroll 0 0 #205C90;
+    color: White;
+}
+#nav .selected a:hover {
+    background: none repeat scroll 0 0 #DDDDDD;
+    color: #205C90;
+}
+ 
+        </style>
+  </metal:javascript_head>
+
+    
+  <body>
+
+    <metal:fill fill-slot="main">
+      <metal:main define-macro="main">
+        
+
+ 
+<!-- tab "panes" -->
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+        
+        <h1 tal:content="context/Title" class="documentFirstHeading">
+          Title or id
+        </h1>
+    
+        <p class="documentDescription"
+           tal:content="here/Description"
+           tal:condition="here/Description">
+            Description
+        </p>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+ 
+
+        <div metal:define-macro="body">
+           
+  <div id="example-one">
+
+    <ul id="nav" class="mytabs">
+                <li class="nav-one"><a href="#featured" class="current">Featured</a></li>
+                <li class="nav-two"><a href="#core">Core</a></li>
+                <li class="nav-three"><a href="#jquerytuts">jQuery</a></li>
+                <li class="nav-four last"><a href="#classics">Classics</a></li>
+    </ul>
+
+    
+
+ </div> <!-- END Organic Tabs (Example One) -->       
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  <div class="panes">
+	<div>
+ 
+                         <tal:code tal:repeat="item python:view.full_code()">
+                      <tal:codeitem tal:content="item">
+                      </tal:codeitem><br/>
+                 </tal:code>
+        
+        
+        
+        
+        
+        </div>
+	<div>Second tab content</div>
+	<div>Third tab content</div>
+        <div>4 tab content</div>
+</div>
+         
+         
+           
+           
+           
+
+</div> 
+       
+      </metal:main>
+    </metal:fill>
+
+  </body>
+
+</html>
+
+</tal:block>
