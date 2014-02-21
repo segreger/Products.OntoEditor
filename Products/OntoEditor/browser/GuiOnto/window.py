@@ -11,7 +11,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import  ReferenceBrowserWidget
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 import json
 def baskref(context):
     par=context
@@ -19,15 +19,7 @@ def baskref(context):
     uid_catalog=getToolByName(portal, 'uid_catalog')
     #refs = refCatalog.getReferences(par.UID(), 'sub_class_of')
     bref=refCatalog.getBackReferences(par)
-    #print bref
-    #l=[uid_catalog(UID=i.sourceUID) for i in refCatalog.getBackReferences(par)]
-    for i in bref:
-        print refCatalog.lookupObject(i.sourceUID).title_or_id() 
-#   #print i.targetUID+'_'+ i.sourceUID+'_'+i.relationship
-#   #print uid_catalog(UID=i.targetUID), uid_catalog(UID=i.sourceUID)
-#   a=[k.getObject().getId() for k in uid_catalog(UID=i.targetUID)][0]
-#   #b=[k.getObject().getId() for k in uid_catalog(UID=i.sourceUID)][0]
-#   print a
+
 def ObjByValUID(valuid):
     if valuid:
         list_obj=self.context.portal_catalog.searchResults(UID=valuid)

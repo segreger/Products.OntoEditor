@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+
+ 
+
+
+<metal:javascriptslot fill-slot="javascript_head_slot">
+<script tal:attributes="type string:text/javascript; src string:${portal_url}/++resource++ontoeditor.javascripts/ontoeditor.jquery.treeview.js"></script>
+<script  tal:attributes="type string:text/javascript; src string:${portal_url}/++resource++ontoeditor.javascripts/ontoeditor.jquery.cookie.js"></script>
+<script  tal:attributes="type string:text/javascript; src string:${portal_url}/++resource++ontoeditor.javascripts/ontoeditor_tab.js"></script>
+</metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/jquery.treeview.css" />
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/screen_tree.css" />
+ </metal:css_macro> 
+
+
+
+<body>
+
+<div metal:fill-slot="main" tal:define="listTab python:view.list_tab()">
+
+			
+	<form class="enableFormTabbing">	
+	    <tal:block >
+		  <fieldset  tal:attributes="id string:fieldset-1">
+		  <legend tal:attributes="id string:fieldsetlegend-1" tal:content="string:Classes">Title</legend> 
+   <tal:block>
+    <ul>
+      
+      <li tal:define="nodeid string:thing"
+	    tal:attributes="id nodeid; class string:node_tree"
+ 
+	     tal:content="string:Thing">title
+      </li>
+      
+    </ul>
+   </tal:block>
+             <div id="mess"></div>
+
+		
+		  </fieldset>
+		  <fieldset tal:attributes="id string:fieldset-2">
+		  <legend tal:attributes="id string:fieldsetlegend-2" tal:content="string:Proprties">Title</legend>
+
+<div tal:define="files python:view.weblist()" class="panel">
+   <p class="formitem" tal:content="python:u'Select file'"></p>
+   <div class="formitem">
+      <select  tal:attributes="name string:file_item">
+      <option tal:repeat="item files" tal:attributes="value item/id" tal:content="item/title_or_id" >item_content</option>
+      </select>
+   </div>
+</div>
+<div class="panel">
+  <div class="formitem">
+   <input tal:attributes="type string:radio; name string:post_action; value string:group;" checked /> 
+    <span tal:content="python:u'Create relation'"></span>
+  </div>
+  <div class="formitem">
+   <input tal:attributes="type string:radio; name string:post_action; value string:person;" />  
+    <span tal:content="python:u'See file'"></span>
+  </div>
+</div>
+<div class="panel">
+  <div class="formitem">
+    <input tal:attributes="type string:submit; value python:u'Save'" />
+ </div>
+</div>
+
+		
+		  </fieldset>
+	    	  <fieldset  tal:attributes="id string:fieldset-3">
+		  <legend tal:attributes="id string:fieldsetlegend-3" tal:content="string:Individuals">Title</legend>
+		<table border="1">
+		<tr tal:repeat="item python:view.verif_file()" tal:content="item"></p>
+		<td tal:repeat="col item" tal:content="col"></td>
+		</tr>
+		</table>
+		
+		  </fieldset>	  
+	    </tal:block>
+	
+
+      </form>
+
+</div>
+
+
+</body>
+</html>

@@ -27,9 +27,10 @@ from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
 from DateTime.DateTime import *
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.site.hooks import getSite
-
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component.hooks import getSite
+from class_utility import *
+"""
 def ParentsList(context):
     p_list=[]
     tec=context
@@ -49,6 +50,7 @@ def ClassParentsList(nameclass):
         p_list.append(item)
         tec=item
     return p_list
+    
 
 def ListDataProp(ocls):
     dp=ocls.getDataProps()
@@ -113,7 +115,7 @@ def getVocabRange(ouid):
                     terms[brain.title_or_id()]=brain.UID()
                         
     return terms
-
+"""
 
 
 class ind_view(BrowserView):
@@ -132,30 +134,19 @@ class ind_view(BrowserView):
         urltool = getToolByName(context, "portal_url")
         self.catalogtool=getToolByName(context, "portal_catalog")
         self.portal = urltool.getPortalObject()  
-    def getParentsList(self):
-        print self.context.title_or_id()
-        p_class=self.context.getSourceClass()
-        if p_class:
-            return ClassParentsList(p_class)
-        else:
-            return 0 
-
-    def ObjPropByParent(name):
-        op={}
-        context_class=self.getClassByName(nameclass)
-        par_list=self.getParentsList(nameclass),append(context_class)
-        for i in par_list:
-            op1=dict([(j.getTitle(), j.getRange()[0].title_or_id()) for j in i.getObjectProps() if j.getRange()])
-            op.update(op1)
-        return op
-    def vocabRange(self,ouid):
-        return getVocabRange(ouid)
-
-    def ListDProp(self, ocls):
-        return ListDataProp(ocls)
-        
+    def getAllPropList(self):
+        OntoObjects1 = self.context.listFolderContents(contentFilter={'portal_type' : 'IndDataProperty'})
+        OntoObjects2 = self.context.listFolderContents(contentFilter={'portal_type' : 'IndObjectProperty'})
+        #print "dprop=", OntoObjects1
+        #print "oprop=", OntoObjects2
+        return {'DataProp':OntoObjects1,'ObjProp':OntoObjects2} 
     def dPropRange(self, dprop):
-        return DataPropRange(dprop)
+        if dprop.getRange():
+            return dprop.getRange()
+        else:
+            return 0
+   
+
 
 
 class ind_add(BrowserView):
@@ -183,16 +174,16 @@ class ind_add(BrowserView):
 
     def __call__(self):
         if self.request.form.has_key("submitted"):
-            print "hhhh"
+            #print "hhhh"
             postback = True
             form = self.request.form
             # Make sure we had a proper form submit, not just a GET request
             submitted = form.get('submitted', False)
             save_button = form.get('form.button.Save', False)
             cancel_button = form.get('form.button.Cancel', False)
-            print "submitted=",submitted
-            print "save_button=",save_button
-            print "cancel_button=",cancel_button
+            #print "submitted=",submitted
+            #print "save_button=",save_button
+            #print "cancel_button=",cancel_button
             if submitted and save_button:
                 fields={}
                 context_uid = form['context_uid']
@@ -202,17 +193,49 @@ class ind_add(BrowserView):
                 ind = container.invokeFactory('OntoIndividual', id=ind_id, title=title)
                 #self.catalogtool.refreshCatalog()
                 container = [i.getObject() for i in self.catalogtool.searchResults({'id': ind})][0]
-                container.setSubClassOf([context_uid])                
+                container.setSourceClass([context_uid])                
                 for i in form.keys():
-                    print i,i[0:4], i[4:],form[i]
+                    #print i,i[0:4], i[4:],form[i]
+
+
                     if i[0:4] == "sel_" and form[i]:
+                        id_subprop=i[4:]
+                        if id_subprop in self.context.keys():
+                            subprop=self.context[id_subprop]
+                            title=subprop.title_or_id()
+                        else:
+                            title=i[4:]
+                            subprop=0
                         range_value = form[i]
-                        id_prop = container.invokeFactory('IndObjectProperty', id=ind_id+"_"+i[4:], title=i[4:])
+                        id_prop = container.invokeFactory('IndObjectProperty', id=ind_id+"_"+i[4:], title=title)
                         prop = [item.getObject() for item in self.catalogtool.searchResults({'id': id_prop})][0]
                         r=[]
-                        print 'field=',i[4:], prop 
+                        #print 'field=',i[4:], prop 
                         r.append(form[i])
                         prop.setRange(r)
+                        r=[]
+                        #print 'field=',i[4:], prop 
+                        if subprop:
+                            r.append(subprop.UID())
+                            prop.setObjectProperty(r)
+
+                    if i[0:3] == "dp_" and form[i]:
+                        id_subprop=i[3:]
+                        if id_subprop in self.context.keys():
+                            subprop=self.context[id_subprop]
+                            title=subprop.title_or_id()
+                        else:
+                            title=i[3:]
+                            subprop=0
+                        range_value = form[i]
+                        id_prop = container.invokeFactory('IndDataProperty', id=ind_id+"_"+i[3:], title=title)
+                        prop = [item.getObject() for item in self.catalogtool.searchResults({'id': id_prop})][0]
+                        prop.setValue(form[i])
+                        if subprop:
+                            r=[]
+                            #print 'field=',i[4:], prop 
+                            r.append(subprop.UID())
+                            prop.setDataProperty(r)
                 self.catalogtool.refreshCatalog()        
                 # Update the acquire-roles setting
                 # Other buttons return to the sharing page

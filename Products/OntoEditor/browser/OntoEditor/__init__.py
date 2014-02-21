@@ -54,13 +54,15 @@ import OntologyView
 import main_view
 import tree_view
 import owltool
-import ind_add
+import ind_operation
 import OntologyManager
 import ontoeditor_tab
 import GeneView
-import TaskManager
+import TreeManager
 import class_operation
 import class_utility
+import class_to_component_view
+import listontoitem_view
 
 
 

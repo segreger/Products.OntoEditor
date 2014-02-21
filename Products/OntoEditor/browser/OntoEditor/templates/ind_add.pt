@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 <metal:javascriptslot fill-slot="javascript_head_slot">
     <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
@@ -21,9 +21,11 @@
         <metal:header define-macro="header">
         </metal:header>
         <!-- body macro where all the fields are -->
-<metal:body define-macro="body" tal:define='cls python:view.getParentsList(); 
-											cdata python:context.getDataProps();
-											codata python:context.getObjectProps();'>
+<metal:body define-macro="body" tal:define=
+	'context python:view.getContextClass(context, request);
+	cls python:view.getParentsList(); 
+	cdata python:context.getDataProps();
+	codata python:context.ListObjectProps();'>
 <form 
 tal:attributes="method string:get; class string:edit-form; action string:${context/absolute_url}/${view/__name__}" i18n:translate="ind_add">
 <input type="hidden" name="submitted" value="True" />
@@ -46,17 +48,38 @@ tal:attributes="method string:get; class string:edit-form; action string:${conte
     </div>
 </fieldset>    
 <fieldset>
-	<legend tal:content="string:Data and Object Properies"></legend>    
+	<legend tal:content="string:Data and Object Properies"></legend>  
+	
+	<div tal:attributes="class string:field">
+		<div tal:attributes="class string:widget">
+			<div tal:attributes="class string:value">
+				  <select class="array" id="kindof" tal:define="ontolist python:view.ListIndKindOf()">
+				  	<tal:iflistind tal:condition="ontolist">
+				  		
+						<tal:ioption tal:repeat="ind ontolist">
+							<option tal:attributes="value python:ind.UID()" tal:content="ind/title_or_id"></option>
+						</tal:ioption>
+					
+					</tal:iflistind>
+				  </select>
+				  
+			</div>
+		</div>	
+	</div>
+
 	<div tal:attributes="class string:field">
 		<input tal:attributes="type string:hidden; name string:context_uid;  value python:context.UID()" />
 		<table tal:attributes="id string:table_total; border string:1">
 		<tr>
-			<td><label tal:attributes="for string:ind_id" tal:content="string:Id">Id</label></td>
-		    <td><input tal:attributes="type string:input; name string:ind_id" /></td>
+			<td><label tal:attributes="for string:descript" tal:content="string:Description">Id</label></td>
+		    <td><textarea tal:attributes="rows string:5; cols string:20; name string:descript">
+		    </textarea>
+		    </td>
 		</tr>
 		<tr>
 		<td><label tal:attributes="for string:title" tal:content="string:Title">Title</label></td>
 		<td><input tal:attributes="type string:input; name string:title" /></td>
+
 		</tr>
 		</table>
 	</div>
@@ -73,6 +96,8 @@ tal:attributes="method string:get; class string:edit-form; action string:${conte
 							<td>
 							<a tal:attributes="href rang/absolute_url" tal:content= "rang/title_or_id">	item_content</a>
 							</td>
+							<!--
+							<td><input tal:attributes="type string:input; name string:prop.uid_${it/id}; value python:it.UID()" /></td> -->
 							<td><input tal:attributes="type string:input; name string:dp_${it/id}" /></td>
 					    </tal:if>
 					    <tal:if tal:condition="python:not view.dPropRange(it)">
@@ -92,7 +117,7 @@ tal:attributes="method string:get; class string:edit-form; action string:${conte
 			<br/>
 			<table tal:attributes="border string:1" >
 			<tal:class tal:repeat="c cls"> -->
-				<tal:objproplist tal:define="oprop python:c.getObjectProps(); ">
+				<tal:objproplist tal:define="oprop python:c.ListObjectProps(); ">
 					<tal:block tal:condition="oprop">
 						<tr tal:repeat="it oprop">
 							<!--ссылка на свойство -->
@@ -103,6 +128,8 @@ tal:attributes="method string:get; class string:edit-form; action string:${conte
 									<td tal:define="rang python:view.dPropRange(it)">
 										<a tal:attributes="href rang/absolute_url" tal:content= "rang/title_or_id">	item_content</a>
 									</td>
+									<!--
+									<td><input tal:attributes="type string:input; name string:uid_${it/id}; value python:it.UID()" /></td> -->
 
 								<!-- список Range -->	
 									<td tal:define="ouid python:it.UID(); list_ind python:view.vocabRange(ouid)">
@@ -115,6 +142,7 @@ tal:attributes="method string:get; class string:edit-form; action string:${conte
 										</select>	
 									</td>
 					  		</tal:opropif>
+
 
 					  		<tal:opropif tal:condition="python:not view.dPropRange(it)"> 
 

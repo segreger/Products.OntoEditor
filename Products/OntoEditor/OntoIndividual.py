@@ -30,10 +30,10 @@ import random
 
 schema = Schema((
 
-    StringField(
+    TextField(
         name='description',
-        widget=StringField._properties['widget'](
-            label='Description',
+        widget=TextField._properties['widget'](
+           label='Description',
             label_msgid='OntoEditor_label_description',
             i18n_domain='OntoEditor',
         ),
@@ -165,7 +165,7 @@ class OntoIndividual(BaseFolder, BrowserDefaultMixin):
         # возвращаем информацию об индивидуале
         return res
 
-    security.declarePrivate('getObjectProps')
+    security.declarePublic('getObjectProps')
     def getObjectProps(self):
         """
         """
@@ -176,7 +176,7 @@ class OntoIndividual(BaseFolder, BrowserDefaultMixin):
                 props.append( self[item_name] )
         return props
 
-    security.declarePrivate('getDataProps')
+    security.declarePublic('getDataProps')
     def getDataProps(self):
         """
         """

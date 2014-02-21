@@ -1,64 +1,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 <body>
-	<div metal:fill-slot="main">
+	<div metal:fill-slot="main"> 
+	<form id='manager_form'>
 	    <link href ="++resource++OntologyManager.css" rel="stylesheet" type="text/css" />
-		<!--<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/_docs/syntax/!script.js"></script>-->
-		<!--<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/jquery.jstree.js"></script>-->
-		<script type="text/javascript" src="++resource++jstree.js"></script>
-		
-		
-		
-		
+            <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
+            <script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js"></script>
+            <script type="text/javascript" src="++resource++plone.app.jquerytools.form.js">
+            </script>
+		    <script type="text/javascript" src="++resource++jstree.js"></script>
+		    <script src="++resource++OntologyManager.js" class="source below" type="text/javascript">
+		    </script>
+		<div>
+		<div id="editor-toolbar">
+<!--
+            <a href="class_view"  id="class_view" name="class_view">
+                <img src="++resource++ontoeditor.icons/save_file_as.png"
+                     alt="Save File As" i18n:attributes="alt" />
+            </a>  -->
+          </div>
+          <div id="command_panel"></div>
 		
 		<h1>Ontology Manager</h1>
 
 		<div class="ontologyTree" id="ontologyClassesTree">
 					Дерево классов
 		</div>
+		<input tal:attributes='id string:class_uid; type string:hidden; value string:3' />
+        <div id="basecontent"></div>
 
-		<!--
-		<div id="ontology">
-			<div id="ontologyTabs">
-				<ul>
-					<li><a href="javascript:void(0);" id="tab_ontologyClasses" class="ontologyTab"><span>Classes</span></a></li>
-					<li><a href="javascript:void(0);" id="tab_ontologyProperties" class="ontologyTab"><span>Properties</span></a></li>
-					<li><a href="javascript:void(0);" id="tab_ontologyIndividuals" class="ontologyTab"><span>Individuals</span></a></li>
-				</ul>
-			</div>
-			<div class="clr"></div>
-			<div id="ontologyActions">
-				<ul class="actionsMenu" id="ontologyClassesActions" style="display:block;">
-					<li><a href="createObject?type_name=OntoClass" target="blank" class="ontoAdd">Add Class</a></li>
-				</ul>
-				<ul class="actionsMenu" id="ontologyPropertiesActions">
-					<li><a href="createObject?type_name=ObjectProperty" target="blank" class="ontoAdd">ObjectProperty</a></li>
-					<li><a href="createObject?type_name=DataProperty" target="blank" class="ontoAdd">DataProperty</a></li>
-				</ul>
-				<ul class="actionsMenu" id="ontologyIndividualsActions">
-					<li><a href="createObject?type_name=OntoIndividual" target="blank" class="ontoAdd">Add Individual</a></li>
-				</ul>
-			</div>
-			<div class="clr"></div>
-			<div id="ontologyWrapper">
-				<div class="ontologyTree" id="ontologyClassesTree">
-					Дерево классов
-				</div>
-				<div class="ontologyTree" id="ontologyPropertiesTree">
-					<div id="ontologyDataPropertiesTree"></div>
-					<div id="ontologyObjectPropertiesTree">Дерево свойств объекта</div>
-				</div>
-				<div class="ontologyTree" id="ontologyIndividualsTree">
-					Дерево индивидуалов
-				</div>
-			</div>
+		<a href="#" id="ontology_export_link">→ Экспортировать онтологию</a>
+		<div id="export_options">
+			Выберите формат экспорта:
+			<ul>
+				<li><input type="radio" name="type" value="RDF_XMLExporter" id="rdf_xml_type" class="type_radio" checked /> <label for="rdf_xml_type">RDF/XML</label></li>
+				<li><input type="radio" name="type" value="OWL_XMLExporter" id="owl_xml_type" class="type_radio" disabled /> <label for="owl_xml_type">OWL/XML</label></li>
+			</ul>
+			<button id="export_ontology_button">Экспортировать</button>
+			<div id="export_result"></div>
 		</div>
-		-->
-		
-		<script src="++resource++OntologyManager.js" class="source below" type="text/javascript"></script>
-		<br />
-	</div>
+		</form>
+	</div> 
 </body>
 </html>

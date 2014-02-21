@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+	  
+ 
+	  
+<metal:javascriptslot fill-slot="javascript_head_slot">
+
+</metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+
+ </metal:css_macro> 
+
+<body>
+<div metal:fill-slot="main" >
+
+<h3 class="ff" tal:content="string:Список объектов" >Json</h3>
+<ul id="black"></ul>
+<form tal:attributes="id string:listontoitem_view">
+<tal:block  tal:define="portal_url context/portal_url; 
+						files python:view.ListItems();">
+	<dl class="collapsible" tal:repeat="item files">
+			     <dt  class="collapsibleHeader">
+			        <span  tal:content="item/title_or_id"></span>
+
+			    </dt>    
+			
+
+				<dd class="collapsibleContent" >		
+
+							<span tal:content="item/description" class=""></span>
+							<table >
+				<tal:dataproplist tal:define="ouid python:item.UID(); props python:view.ItemContent(ouid)" >
+
+					
+					<tal:block tal:condition="python:props['DataProp']">
+						<tr tal:repeat="it python:props['DataProp']">
+							<td><a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+							</td>
+						<tal:if tal:condition="python:it.getValue()" >
+							<td>
+							<span tal:content= "python:it.getValue()">	item_content</span>
+							</td>
+							
+					    </tal:if>
+
+						<tal:if tal:condition="python:not it.getValue()" >
+							<td>
+							<span tal:content= "string:Nothing">item_content</span>
+							</td>
+						</tal:if> </tr>
+					</tal:block>	
+					
+					<tal:block tal:condition="python:props['ObjProp']">
+							<tr tal:repeat="it python:props['ObjProp']">
+								<td>
+									<a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+								</td>	
+
+								<tal:if tal:condition="python:it.getRange()" >
+									<td tal:define= "rg python:it.getRange()[0]">
+										<a tal:attributes="href it/absolute_url"><span tal:content="rg/title_or_id"></span></a>
+									</td>
+								</tal:if> 
+
+							</tr>
+					</tal:block>
+						
+					
+				</tal:dataproplist>
+
+
+		</table>
+
+				</dd>
+		 
+
+	</dl>
+</tal:block>
+</form>
+</div>
+
+
+
+</body>
+</html>

@@ -34,8 +34,8 @@ from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+from Products.OntoEditor.class_utility import *
 
 def subclasses(context,parent_name):
     urltool = getToolByName(context,"portal_url")
@@ -90,6 +90,9 @@ class recurse_tab(BrowserView):
 
 
 class ontoeditor_tab(BrowserView):
+    template=ViewPageTemplateFile('templates/ontoeditor_tab.pt')
+    template1=ViewPageTemplateFile('templates/ontoeditor_tab.pt')
+    template2=ViewPageTemplateFile('templates/ontoeditor_tab.pt')
 
     def __init__(self, context, request):
         self.context=context
@@ -98,65 +101,172 @@ class ontoeditor_tab(BrowserView):
         urltool = getToolByName(context, "portal_url")
         self.catalogtool=getToolByName(context, "portal_catalog")
         self.portal = urltool.getPortalObject()
-        self.disclist=[i.getObject() for i in self.context.portal_catalog.searchResults(portal_type='OntoClass')]
-        #self.speclist=[i.getObject() for i in self.context.portal_catalog.searchResults(portal_type='Specialty')]
-        self.ontofolder=[i.getObject() for i in self.catalogtool.searchResults(portal_type='Ontology')]
-        self.portal.acl_users.credentials_cookie_auth.login_path = ""
+
+
+    def __call__(self):
+        if hasattr(self.request, 'file_item') and not hasattr(self.request, 'verify'):
+            self.file_item=getattr(self.request,'file_item')
+            return self.template()
+        if hasattr(self.request, 'file_item') and hasattr(self.request, 'verify'):
+            self.file_item=getattr(self.request,'file_item')
+            return self.template()
+        else:
+            return self.template()
+
+    def weblist(self):
+        files = self.catalogtool.searchResults(portal_type = 'File')
+        return [i.getObject() for i in files]
+    def parse_file(self,mode):
+        id_file=self.file_item
+        files = self.catalogtool.searchResults(portal_type = 'File', id=id_file)
+        file = files[0].getObject()
+        data = file.get_data()
+        rows=data.split('\r\n')
+        list_class=[]
+        a=''
+        for row in rows:
+            fields =row.split(' ')
+            if fields and len(fields)==3:
+                oclass=fields[0]
+                ontotitle=fields[1]
+                pclass=fields[2]
+                a=(oclass,ontotitle,pclass)
+            if fields and len(fields)==1:
+                oclass=fields[0]
+                ontotitle='None '
+                pclass='None '
+                a=(oclass,ontotitle,pclass)
+            if fields and len(fields)==2:
+                oclass=fields[0]
+                ontotitle=fields[1]
+                pclass='None '
+                a=(oclass,ontotitle,pclass)
+            if a:list_class.append(a)
+        if mode=="verif":
+            return self.verif_file(list_class)
+        if mode=="change":
+            x=self.change_onto(self.verif_file(list_class))
+            return self.parse_file('verif')
+
+
+    def create_class(self, onto,title):
+        container = getOnto(onto)
+        ind_id = title
+        title = title
+        ind = container.invokeFactory('OntoClass', id=ind_id, title=title)
+        #self.catalogtool.refreshCatalog()
+        cls = [i.getObject() for i in self.catalogtool.searchResults({'id': ind})][0]
+        #container.setSubClassOf([context_uid])
+        return cls
+
+    def verif_file(self, list_class):
+        res=[]
+        for fields in list_class:
+            #print 'fields=',fields
+            oclass=fields[0]
+            ontotitle=fields[1]
+            pclass=fields[2]
+            obj_class="none"
+            par_class="none"
+            #t=set([oclass,ontotitle,pclass])
+            classes=self.get_classes(ontotitle, oclass, pclass)
+            #print "classes=", classes
+            if isinstance(classes,tuple):
+                y=0
+                ontology=classes[0]
+                if classes[1]:
+                    obj_class=classes[1].title_or_id()
+                if classes[2]:
+                    par_class=classes[2].title_or_id()
+                if classes[1] and classes[2] and classes[1].getSubClassOf():
+                    p=classes[1].getSubClassOf()[0]
+                    if p.title_or_id()==classes[2].title_or_id():
+                        y=1
+                    else:
+                        y=0
+                if oclass==obj_class and pclass==par_class and y:
+                    res.append((oclass, pclass,obj_class,par_class, "verify"))
+                else:
+                    res.append((oclass, pclass,obj_class,par_class, "not_verify"))
+
+                #"add classes if not exist"
+                if classes[1]:
+                    obj_class=classes[1].title_or_id()
+                else:
+                    obj_class=self.create_class(ontology,oclass).title_or_id()
+
+                if classes[2]:
+                    par_class=classes[2].title_or_id()
+                else:
+                    par_class=self.create_class(ontology,pclass).title_or_id()
+        self.verif=(ontotitle,res)    
+        return (ontotitle,res)
+
+    def change_onto(self, verif_res):
+        ontotitle=verif_res[0]
+        for item in verif_res[1]:
+            oclass = item[0]
+            pclass = item[1]
+            obj_class=item[2]
+            par_class=item[3]
+            mess=item[4]
+            if mess=='not_verify':
+                res=self.get_classes(ontotitle, obj_class, par_class)
+                print 'res=',res,
+                if res:
+                    cls=res[1]
+                    par=res[2]
+                    cls.setSubClassOf([par.UID()])
+                    print cls.title_or_id(),'subClassOf=', cls.getSubClassOf()[0].title_or_id(),
+        return 1
+
+    def see_transf(self):
+        x=self.verif
+        return self.change_onto(x)
+
+    def addparent(self):
+        set_parentclass(onttitle, oclass, pclass)
 
     def obj_fold(self):
         ref_folder=self.context.getDirectoryEntry()
         obj=self.context.unrestrictedTraverse(ref_folder)
         return obj
     def list_tab(self):
-        return ('Classes','Properties','Individuals')
+        return ('Import','Properties','Individuals')
+    """
+    def set_parentclass(self, ontotitle, oclass, pclass):
+        classes=self.get_classes(ontotitle, oclass, pclass)
+        obj_class=classes[1]
+        par_class=classes[2]
+        if isinstance(obj_class, OntoClass) and obj_class.getSubClassOf():
+            item=obj_class.getSubClassOf()[0]
+            if item and par_class and not item.Title()==par_class.Title():
+                obj_class.setSubClassOf([par_class.UID()])
+    """
+   
+    def get_classes(self, ontotitle, oclass, pclass):
+        ontology = getOnto(ontotitle)
+        print "onto=", ontology,
+        obj_class=''
+        par_class=''
+        if ontology:
+            obj_clases=ontology.getObjectsByName(byType="OntoClass", byName=oclass, byPath=ontology.getPath())
+            par_clases=ontology.getObjectsByName(byType="OntoClass", byName=pclass, byPath=ontology.getPath())
+            """
+            print "onto=", ontology
 
-    def list_subclasses(self, parent_name):
-        """        
-        if hasattr(self.context,parent_name):
-            par=getattr(self.context,parent_name)
+            print 'obj_clases=', obj_clases.title_or_id(), 'par_clases=', par_clases.title_or_id(),
+            """
+            if obj_clases:
+                obj_class=obj_clases
+            if par_clases:
+                par_class=par_clases
+            return (ontotitle, obj_class, par_class)
         else:
-            par=None
-        if hasattr(self.request,'mode'):
-            mode=getattr(self.request,'mode')
-        else:
-            mode=None
-        if par:
-            #refs = self.refCatalog.getReferences(par, 'sub_class_of')
-            brefs=self.refCatalog.getBackReferences(par)
-            l=[self.uid_catalog(UID=i.sourceUID) for i in self.refCatalog.getBackReferences(par)]
-            #for i in brefs:
-            #print refCatalog.lookupObject(i.targetUID), refCatalog.lookupObject(i.sourceUID)
-            targ_list=[(self.refCatalog.lookupObject(i.sourceUID)) for i in brefs]
-            #obj_list=[k.getObject() for k in targ_list]
-            #ret="<ul>"
-            #    ret=ret+"<li>"+j.title_or_id()+"</li>"
-            #ret=ret+"</ul>"    
-            if mode:
+            return 0
+
+            
                 
-                if targ_list:
-                    obj_list=[k.getObject() for k in targ_list]
-                    ret="<ul>"
-                    for j in obj_list:
-                        ret=ret+"<li>"+j.title_or_id()+"</li>"
-                    ret=ret+"</ul>"
-                else:
-                    ret="<p>kkkk<.p>"
-                response = self.request.response
-                response.setHeader('Content-Type','text/html')
-                return ret
-            else:
-                return targ_list
-        else:
-            return None
-        """
-        return subclasses(self.context, parent_name)
-  
-    
-        
-
-    """
-
-    """
 
 
 

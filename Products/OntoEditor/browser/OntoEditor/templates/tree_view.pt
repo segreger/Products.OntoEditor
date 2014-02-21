@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 	  
  
@@ -21,54 +21,75 @@
  </metal:css_macro> 
 
 <body>
-<div metal:fill-slot="main" tal:define="listTems python:context.listFolderContents(contentFilter={'portal_type' :'OntoClass'})">
-<!--style="display: none;"-->
-<div id="main">
-<h3 class="ff" >Json</h3>
+<div metal:fill-slot="main" tal:define="listTems python:context.listFolderContents()">
+
+<h3 class="ff" tal:content="string:Список объектов" >Json</h3>
 <ul id="black"></ul>
-</div>
-<div id="mess">hhhh</div>
-<div class="apple_overlay" id="overlay">
+<form tal:attributes="id string:tree_view">
+<tal:block  tal:define="portal_url context/portal_url; 
+						files python:view.ListItems();">
+	<dl class="collapsible" tal:repeat="item files">
+			     <dt  class="collapsibleHeader">
+			        <span  tal:content="item/title_or_id"></span>
 
-	<!-- the external content is loaded inside this tag -->
-	<div class="contentWrap"></div>
+			    </dt>    
+			
 
-</div>
-<div id="main_tree">
-<ul id="browser" class="filetree treeview" tal:define="info python:view.list_subclasses('thing')">
-<li id="top_node"  class="node_tree">
-<span tal:attributes="class string:folder;"  tal:content="string:Thing">title</span>
-</li>
-</ul>
-<ul id="black">
-	</ul>
-	
-	<h4>Mixed pre and lazy-loading</h4>
-	
-	<ul id="mixed">
-		<li><span>Item 1</span>
-			<ul>
-				<li><span>Item 1.0</span>
-					<ul>
-						<li><span>Item 1.0.0</span></li>
-					</ul>
-				</li>
-				<li><span>Item 1.1</span></li>
-			</ul>
-		</li>
-		<li id="36" class="hasChildren">
-			<span>Item 2</span>
-			<ul>
-				<li><span class="placeholder">&nbsp;</span></li>
-			</ul>
-		</li>
-		<li>
-			<span>Item 3</span>
-		</li>
-	</ul>
+				<dd class="collapsibleContent" >		
 
+							<span tal:content="item/description" class=""></span>
+							<table >
+				<tal:dataproplist tal:define="ouid python:item.UID(); props python:view.ItemContent()" >
+
+					
+					<tal:block tal:condition="python:props['DataProp']">
+						<tr tal:repeat="it python:props['DataProp']">
+							<td><a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+							</td>
+						<tal:if tal:condition="python:it.getValue()" >
+							<td>
+							<span tal:content= "python:it.getValue()">	item_content</span>
+							</td>
+							
+					    </tal:if>
+
+						<tal:if tal:condition="python:not it.getValue()" >
+							<td>
+							<span tal:content= "string:Nothing">item_content</span>
+							</td>
+						</tal:if> </tr>
+					</tal:block>	
+					
+					<tal:block tal:condition="python:props['ObjProp']">
+							<tr tal:repeat="it python:props['ObjProp']">
+								<td>
+									<a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+								</td>	
+
+								<tal:if tal:condition="python:it.getRange()" >
+									<td tal:define= "rg python:it.getRange()[0]">
+										<a tal:attributes="href it/absolute_url"><span tal:content="rg/title_or_id"></span></a>
+									</td>
+								</tal:if> 
+
+							</tr>
+					</tal:block>
+						
+					
+				</tal:dataproplist>
+
+
+		</table>
+
+				</dd>
+		 
+
+	</dl>
+</tal:block>
+</form>
 </div>
 
-</div>
+
+
 </body>
 </html>

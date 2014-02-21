@@ -45,7 +45,7 @@ schema = Schema((
             label_msgid='OntoEditor_label_subPropertyOf',
             i18n_domain='OntoEditor',
         ),
-        allowed_types=('ObjectProperty','OntoClass'),
+        allowed_types=('ClassObjectProperty','ObjectProperty','OntoClass'),
         multiValued=1,
         relationship='sub_property_of',
     ),

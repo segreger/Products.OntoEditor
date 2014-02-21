@@ -4,3 +4,9 @@
 #listpanel {
 	width:300px;
 	}
+tr.trline {
+	background-color: #CC9999; color: black;
+}
+tr.trbase {
+	background-color: #9999CC; color: black;
+}

@@ -1,12 +1,22 @@
-jq.noConflict();
-jq(document).ready(function($){
-	jq('p.menu a').prepOverlay({subtype : 'iframe'});
-	
-	getonto();
-	jq('#sel_onto1').bind('change', getrootclass());
-	
+/*
+(function ($) {
+ $(document).ready(function() {
+ 
+ var overlayDiv = $(".overlay_popup").overlay(
+ {expose: '#000000', 
+ close: '.close_overlay',   
+ finish: { top: 'center', left: 'center', absolute: false }});
+ $(".overlay_popup").bind("click", function(){overlayDiv.load();})
+$('#ex').prepOverlay({
+subtype: 'ajax',
+filter: '#content',
+formselector: '#manager_form',
+noform: 'close' 
+});
 
- })  
+}); 
+}(jQuery));
+ */
 function getonto(){
     
     var url1=document.baseURI+"ind_add?listonto=all";

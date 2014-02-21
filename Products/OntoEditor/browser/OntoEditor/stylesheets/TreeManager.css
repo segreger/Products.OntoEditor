@@ -1,0 +1,140 @@
+/* General */
+.clr {
+    clear: both;
+    float: none;
+}
+#ontology {
+    width: 80%;
+}
+/* Wrapper */
+#ontologyWrapper {
+    border:1px solid #2763A5;
+    border-radius: 0 0 5px 5px;
+    padding:5px;
+}
+
+/* Actions */
+#ontologyActions {
+    background: #3A75B6;
+    height: 40px;
+    line-height: 40px;
+    font-size:85%;
+    border-radius: 5px 5px 0 0;
+}
+#ontologyActions ul{
+    margin:0;
+    padding:10px 0 0 10px;
+}
+#ontologyClassesActions li, #ontologyPropertiesActions li, #ontologyIndividualsActions li{
+    display: block;
+    float:left;
+    margin: 0 0 0 5px;
+}
+#ontologyClassesActions li a, #ontologyPropertiesActions li a, #ontologyIndividualsActions li a {
+    padding: 5px 5px 5px 25px;
+	margin: 0 0 0 10px;
+    color:#fff;
+    background-color: #5C96D5;
+    border-radius: 5px;
+}
+#ontologyClassesActions li a:hover, #ontologyPropertiesActions li a:hover, #ontologyIndividualsActions li a:hover{
+    background-color: #D3DEEA;
+    color:#333;
+<!--
+.actionsMenu, .ontologyTree {
+    display: none;
+} -->
+.ontoAdd, .ontoRemove {
+    background-position: 5px 5px;
+    background-repeat: no-repeat;
+}
+.ontoAdd {
+    background-image: url("++resource++add.png");
+}
+.ontoRemove {
+    background-image: url("++resource++remove.png");
+}
+
+/* Ontology tabs */
+#ontologyTabs {
+    float:left;
+    width:100%;
+    font-size:93%;
+    line-height:normal;
+}
+
+#ontologyTabs ul {
+    margin:0;
+    padding:10px 10px 0 20px;
+    list-style:none;
+}
+
+#ontologyTabs li {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+
+#ontologyTabs a {
+    float:left;
+    background:url("++resource++tableft.gif") no-repeat left top;
+    margin:0;
+    padding:0 0 0 4px;
+    text-decoration:none;
+}
+
+#ontologyTabs a span {
+    float:left;
+    display:block;
+    background:url("++resource++tabright.gif") no-repeat right top;
+    padding:5px 15px 4px 6px;
+    color:#FFF;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#ontologyTabs a span {float:none;}
+
+/* End IE5-Mac hack */
+#ontologyTabs a:hover span {
+    color:#FFF;
+}
+
+#ontologyTabs a:hover , #ontologyTabs li .active{
+    background-position:0% -42px;
+}
+
+#ontologyTabs a:hover span, #ontologyTabs li .active span {
+    background-position:100% -42px;
+}
+
+#ontology li {
+	margin:0;
+	padding:0;
+}
+.actionsMenu  li{
+	text-decoration:none;
+	border:none;
+}
+
+#ontology_export_link {
+    float: right;
+    border-bottom: 1px dotted #000;
+    font-size: 12pt;
+}
+#export_options {
+    clear: both;
+    float: none;
+    display: none;
+    border: 1px dotted #004A7F;
+    background: #F4FAFF;
+    padding: 10px;
+}
+#export_options ul{
+    list-style: none;
+}
+#export_result{
+    background: #cacaca;
+    margin: 10px;
+    padding: 5px;
+    display: none;
+}

@@ -122,8 +122,8 @@ class Ontology(BaseFolder, BrowserDefaultMixin):
         # получаем классы, если есть
         
         tmp = self.getClasses()
-        print self
-        print tmp
+        #print self
+        #print tmp
         #pdb.set_trace()
         if ( tmp != []):
             res['classes']     = [i.getInfo() for i in tmp]
@@ -158,6 +158,7 @@ class Ontology(BaseFolder, BrowserDefaultMixin):
         byPath = self.getPath()
         catalogtool = getToolByName( self, 'portal_catalog' )
         res = []
+        
         # находим все объекты данного типа для данной онтологии
         for i in catalogtool.searchResults( portal_type = byType, path = {'query' : byPath} ):
             res.append( i.getObject() )
@@ -171,15 +172,15 @@ class Ontology(BaseFolder, BrowserDefaultMixin):
         catalogtool = getToolByName( self, 'portal_catalog' )
         res = []
         # находим все объекты данного типа для данной онтологии
-        for i in catalogtool.searchResults( Title = byName
+        obj=[i.getObject() for i in catalogtool.searchResults( Title = byName
                                           , portal_type = byType
                                           , path = {'query' : byPath}
-                                          ):
-            obj = i.getObject()
-            return obj.getName() + ' ' + byName
-            if ( obj.getName() == byName ):
-                res.append( i.getObject() )
-        return res
+                                          )]
+        if obj:
+            return obj[0]
+        else:
+            return 0
+
         
     security.declarePublic('getClasses')
     def getClasses(self):

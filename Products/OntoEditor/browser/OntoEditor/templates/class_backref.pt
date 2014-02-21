@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 <metal:javascriptslot fill-slot="javascript_head_slot">
     <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
@@ -23,7 +23,7 @@
         <!-- body macro where all the fields are -->
 <metal:body define-macro="body" tal:define='cls python:view.getParentsList(); 
 											cdata python:context.getDataProps();
-											codata python:context.getObjectProps();'>
+											codata python:context.ListObjectProps();'>
 <form 
 tal:attributes="method string:get; class string:edit-form; action string:${context/absolute_url}/${view/__name__}" i18n:translate="class_backref">
   
@@ -34,7 +34,7 @@ tal:attributes="method string:get; class string:edit-form; action string:${conte
 		<tr tal:repeat="obj ref">
 			<td> <a tal:attributes="href obj/absolute_url" tal:content="obj/title_or_id">Id </a> </td>
 		    <td> 
-		    	<tal:cond tal:condition="python:obj.getSubClassOf()">
+		    	<tal:cond tal:condition="python:view.checkSubClassOf(obj)">
 		    		<span tal:define="cls python:obj.getSubClassOf()[0]">
 
 		    	<a tal:attributes="href cls/absolute_url" tal:content="cls/title_or_id">Id </a>

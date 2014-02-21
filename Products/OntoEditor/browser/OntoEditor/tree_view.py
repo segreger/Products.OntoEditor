@@ -25,8 +25,9 @@ from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import  ReferenceBrowserWidget
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 import json
+from class_utility import *
 
 def subclasses(context,parent_name):
     urltool = getToolByName(context,"portal_url")
@@ -83,20 +84,12 @@ class tree_view(BrowserView):
         self.portal = self.urltool.getPortalObject()
         self.refCatalog = getToolByName(self.portal, 'reference_catalog')
         self.uid_catalog=getToolByName(self.portal, 'uid_catalog')
+        
     def __call__(self):
-        if hasattr(self.request, 'test'):
-            response = self.request.response
-            response.setHeader('Content-Type','application/json')
-            a=self.json_call()
-            return a
-
-        if hasattr(self.request, 'node'):
-            
-            parent_name=getattr(self.request,'node')
-            subclasses(self.context, parent_name)    
-        else:
-            return self.template()
-    
+        self.context=self.getContextClass(self.context, self.request)
+        return self.template()
+    def getContextClass(self,context, request):
+        return viewContextClass(context, request)
     
     def list_subclasses(self, parent_name):
         """        
@@ -157,7 +150,10 @@ class tree_view(BrowserView):
         return self.onto_data
     ##code-section class-header_tema_view #fill in your manual code here
     ##/code-section class-header_tema_view
-
+    def ListItems(self):
+        return getListOntoObject(self.context.UID())
+    def ItemContent(self):
+        return ObjectAllPropList(self.context.UID())
 
 
 

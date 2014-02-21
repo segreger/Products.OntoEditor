@@ -17,6 +17,7 @@
    <element value="IndObjectProperty"/>
    <element value="IndDataProperty"/>
    <element value="OntoIndividual"/>
+   <element value="TextContent"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view">folder_listing</property>

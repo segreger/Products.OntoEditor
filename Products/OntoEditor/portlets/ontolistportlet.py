@@ -6,7 +6,7 @@ from plone.portlets.interfaces import IPortletDataProvider
 
 from zope import schema
 from zope.formlib import form
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
 from Products.OntoEditor import OntoEditorMessageFactory as _
 

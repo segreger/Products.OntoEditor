@@ -26,18 +26,19 @@ from zope.interface import implements
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 import json
 from Products.CMFCore.utils import getToolByName
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager
 from Products.CMFCore.utils import getToolByName
-from zope.site.hooks import getSite
+from zope.component.hooks import getSite
+from class_utility import *
 
 class OntoJSON(BrowserView):
     """
 
     """
-    template = ViewPageTemplateFile('templates/ind_add.pt')
+    #template = ViewPageTemplateFile('templates/ind_add.pt')
 
 
     def __init__(self, context,request):
@@ -115,6 +116,32 @@ class OntoJSON(BrowserView):
         #dProps: <ontology_data_properties>,
         #individuals: <ontology_individuals>
         
+        if hasattr(self.request, 'reflist'):
+            #pdb.set_trace()
+            ref=self.get_fromreq('reflist')
+            ouid=self.get_fromreq('ouid')
+            list_comm=[]
+            """
+            получаем список Range класов у о.свойства
+            """
+            onto_objs=OPropByNameList(ouid,ref)
+            print 'onto_obj=',onto_objs
+            if onto_objs:
+                onto_data={}
+                for i in onto_objs:
+                    onto_data['command_name']=i.title_or_id()
+                    for j in ListDataProp(i.title_or_id()):
+                        onto_data[j.title_or_id()]=j.getDefault_value()
+                    list_comm.append(onto_data)
+                    onto_data={}
+                print 'list=',list_comm
+                response_body = list_comm
+                response_http = json.dumps(response_body)
+                self.request.response.setHeader('content-length', len(response_http))
+                return response_http
+            else:
+                self.response_json([])
+
         if hasattr(self.request, 'ontology'):
             #pdb.set_trace()
             onto_id=self.request['ontology']
@@ -128,21 +155,28 @@ class OntoJSON(BrowserView):
                else:
                    result=onto_obj.getInfo()[ontoitem]
                    onto_data ={ontoitem: result}
-            self.request.response.setHeader('content-type', 'application/json; charset=utf-8')
-            response_body = onto_data
-            response_http = json.dumps(response_body)
-            self.request.response.setHeader('content-length', len(response_http))
-            return response_http              
+            self.response_json(onto_data)
+
+
+        """  
+                   
         else:
             #self.onto_data = json.dumps({'ontology': self.context.getInfo()})
             #self.new_oe_js = 'var data1='+self.onto_data+';'
             return self.template()
+        """
                
         #self.onto_data = json.dumps({'ontology': self.context.getInfo()})
         #self.new_oe_js = 'var ontoEditor; $(function() { try { ontoEditor = new OntologyEditor('+self.onto_data+'); } catch(e) {}; });'
     
 
-        
+    def response_json(self, onto_data):
+        self.request.response.setHeader('content-type', 'application/json; charset=utf-8')
+        response_body = onto_data
+        response_http = self.json_call(response_body)
+        self.request.response.setHeader('content-length', len(response_http))
+        return response_http
+
         
     def get_fromreq(self, name):
         if hasattr(self.request, name):
@@ -227,10 +261,12 @@ class OntoJSON(BrowserView):
         for i in l:
             f[str(i.title_or_id())]=i.getId()
         return f    
-    def json_call(self):
-        self.onto_data = json.dumps(self.listontologys())
+    def json_call(self, onto_data):
+        #self.onto_data = json.dumps(self.listontologys())
         #return self.onto_data
-        return json.dumps(self.onto_data)
+        x=json.dumps(onto_data)
+        print 'x=', x
+        return x
 
     def getClassParentsList(self,nameclass):
         p_list=[]

@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<metal:javascriptslot fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.overlayhelpers.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.jquerytools.form.js"></script>
+	<script type="text/javascript" src="++resource++ind_main.js"></script>
+	<script type="text/javascript">
+
+    </script>
+ </metal:javascriptslot>
+ <metal:css_macro metal:define-macro="css">
+  <link rel="stylesheet" type="text/css" tal:attributes="href string:${portal_url}/++resource++ontoeditor.stylesheets/ind_add.css" />
+  </metal:css_macro> 	  
+
+<body>
+<metal:main fill-slot="main">
+        <!-- header, H1 with title in it -->
+        <metal:header define-macro="header">
+        </metal:header>
+        <!-- body macro where all the fields are -->
+<metal:body define-macro="body" tal:define='cls python:view.getParentsList(); 
+											cdata python:context.getDataProps();
+											codata python:context.ListObjectProps();'>
+<form>
+<!-- преобразование в схему компонента -->
+	<fieldset tal:define="list_fieldtypes python:view.getListFieldTypes('ArchetypeField')">
+		<legend tal:content="string:Transform to schema of fields"></legend>
+		<div>
+		<table tal:attributes="border string:1" >
+			<tr>
+				<th tal:content="string:Relation"></th>
+				<th tal:content="string:Id field"></th>
+				<th tal:content="string:Target field type"></th>
+			</tr>
+			<tal:class tal:repeat="c cls">
+							
+
+				<tal:dataproplist tal:define="dprop1 python:c.getDataProps();">
+
+					<tal:block tal:condition="dprop1">
+						<tr tal:repeat="it dprop1">
+							<td><a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+							</td>
+							<td><input tal:attributes="type string:input; name string:id_field_${it/id}" /></td>
+							<td>
+										<select tal:attributes="class string:array; name string:sel_${it/id}">
+											<!--<tal:iflistind tal:condition="list_fieldtypes"> -->
+												<tal:ioption tal:repeat="ind list_fieldtypes">
+												<option tal:attributes="value python:ind.UID()" tal:content="			python:ind.title_or_id()"></option>
+										        </tal:ioption>
+										<!--    </tal:iflistind> -->
+										</select>	
+									</td>
+						</tr>
+					</tal:block>
+				</tal:dataproplist>
+
+				<tal:objproplist tal:define="oprop python:c.ListObjectProps(); ">
+					<tal:block tal:condition="oprop">
+						<tr tal:repeat="it oprop">
+							<td><a tal:attributes="href it/absolute_url" tal:content= "it/title_or_id">	item_content</a>
+							</td>
+							<td><input tal:attributes="type string:input; name string:id_field_${it/id}" /></td>
+							<td><select tal:attributes="class string:array; name string:sel_${it/id}">
+											<tal:iflistind tal:condition="list_fieldtypes">
+												<tal:ioption tal:repeat="ind list_fieldtypes">
+												<option tal:attributes="value python:ind.UID()" tal:content="			python:ind.title_or_id()"></option>
+										        </tal:ioption>
+										</tal:iflistind>
+										</select>	
+									</td>
+
+						</tr>
+					</tal:block>
+				</tal:objproplist>	
+			</tal:class>
+
+		</table>
+	</div>
+</fieldset>	
+</form>
+</metal:body>
+</metal:main>
+</body>
+</html>

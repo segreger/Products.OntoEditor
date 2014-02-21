@@ -10,20 +10,6 @@
       />
 
   <browser:page
-      for="*"
-      name="page_pfg_javascript_variables.js"
-      class="Products.OntoEditor.browser.PageEdit.jsvariables.JSVariables"
-      permission="zope.Public"
-      />
-
-  <browser:page
-    for="*"
-    class="Products.OntoEditor.browser.PageEdit.quickedit.QuickEditView"
-    name="page_quickedit"
-    template="page_quickedit.pt"
-    permission="cmf.ModifyPortalContent"
-    />
-  <browser:page
     for="*"
     class="Products.OntoEditor.browser.PageEdit.page_view.PageView"
     name="pageview"

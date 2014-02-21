@@ -27,8 +27,8 @@ from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
 from DateTime.DateTime import *
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.site.hooks import getSite
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component.hooks import getSite
 
 class ind_add(BrowserView):
     template = ViewPageTemplateFile('templates/ind_add.pt')
@@ -65,16 +65,13 @@ class ind_add(BrowserView):
             return 0
     def __call__(self):
         if self.request.form.has_key("submitted"):
-            print "hhhh"
             postback = True
             form = self.request.form
             # Make sure we had a proper form submit, not just a GET request
             submitted = form.get('submitted', False)
             save_button = form.get('form.button.Save', False)
             cancel_button = form.get('form.button.Cancel', False)
-            print "submitted=",submitted
-            print "save_button=",save_button
-            print "cancel_button=",cancel_button
+
             if submitted and save_button:
                 fields={}
                 context_uid = form['context_uid']
@@ -85,13 +82,13 @@ class ind_add(BrowserView):
                 #self.catalogtool.refreshCatalog()
                 container = [i.getObject() for i in self.catalogtool.searchResults({'id': ind})][0]                
                 for i in form.keys():
-                    print i,i[0:4], i[4:],form[i]
+
                     if i[0:4] == "sel_" and form[i]:
                         range_value = form[i]
                         id_prop = container.invokeFactory('IndObjectProperty', id=ind_id+"_"+i[4:], title=i[4:])
                         prop = [item.getObject() for item in self.catalogtool.searchResults({'id': id_prop})][0]
                         r=[]
-                        print 'field=',i[4:], prop 
+                        #print 'field=',i[4:], prop 
                         r.append(form[i])
                         prop.setRange(r)
                 self.catalogtool.refreshCatalog()        

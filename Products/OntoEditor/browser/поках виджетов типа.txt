@@ -1,0 +1,9 @@
+						<tal:block tal:define="widgets nocall:it/@@view">
+						  <tal:block repeat="widget view/widgets/values">
+							<tr class="field" tal:condition="python:widget.__name__ not in ('IBasic.title', 'IBasic.description', 'title', 'description',)">
+								<td tal:content="widget/label" />
+          
+							<td tal:content="structure widget/render" />
+							</tr>
+						  </tal:block>	
+						</tal:block>

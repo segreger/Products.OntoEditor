@@ -14,6 +14,7 @@ __docformat__ = 'plaintext'
 
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import *
+#from Products.ATContentTypes.content.folder import ATFolder
 from zope.interface import implements
 import interfaces
 
@@ -80,7 +81,7 @@ schema = Schema((
             label_msgid='OntoEditor_label_hasKindOf',
             i18n_domain='OntoEditor',
         ),
-        allowed_types=('OntoClass',),
+        allowed_types=('OntoClass', 'OntoIndividual'),
         multiValued=1,
         relationship='has_kind_of',
     ),
@@ -91,7 +92,7 @@ schema = Schema((
             label_msgid='OntoEditor_label_hasMetatype',
             i18n_domain='OntoEditor',
         ),
-        allowed_types=('OntoClass',),
+        allowed_types=('OntoClass','OntoIndividual',),
         multiValued=1,
         relationship='has_metatype',
     ),
@@ -102,7 +103,10 @@ schema = Schema((
 ##/code-section after-local-schema
 
 OntoClass_schema = BaseFolderSchema.copy() + \
-    schema.copy()
+    schema.copy() 
+#OntoClass_schema = getattr(ATFolder, 'schema', Schema(())).copy() + \
+#    schema.copy()
+
 
 ##code-section after-schema #fill in your manual code here
 ##/code-section after-schema
@@ -199,8 +203,8 @@ class OntoClass(BaseFolder, BrowserDefaultMixin):
         return res        
 
 
-    security.declarePublic('getObjectProps')
-    def getObjectProps(self):
+    security.declarePublic('ListObjectProps')
+    def ListObjectProps(self):
         """
         """
         # получаем все развязки объектного свойства данного класса
@@ -231,8 +235,11 @@ class OntoClass(BaseFolder, BrowserDefaultMixin):
         # получаем все развязки дата свойства данного класса
         props = []
         for item_name in self.keys():
+            print 'title=',self.title_or_id()
             if ( self[item_name].meta_type == 'ClassDataProperty' ):
+                print 'dpr=', item_name, self[item_name]
                 props.append( self[item_name] )
+        print 'props=',props
         return props        
 
     security.declarePublic('getProperties')

@@ -92,7 +92,12 @@ class ClassDataProperty(BaseContent, BrowserDefaultMixin):
        """
        # возвращаем имя развязки дата свойства между классами
        return self.title_or_id()
-    
+    security.declarePrivate('getNameAndValue')
+    def getNameAndValue(self):
+       """
+       """
+       # возвращаем имя свойства и значение
+       return (self.title_or_id(), self.getDefault_value())
     security.declarePrivate('getInfo')
     def getInfo(self):
        """

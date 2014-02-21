@@ -11,7 +11,7 @@
 
 __author__ = """unknown <unknown>"""
 __docformat__ = 'plaintext'
-
+import pdb
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import *
 from zope.interface import implements
@@ -44,8 +44,8 @@ schema = Schema((
             label_msgid='OntoEditor_label_range',
             i18n_domain='OntoEditor',
         ),
-        allowed_types=('OntoIndividual', 'OntoClass','Ontology'),
-        multiValued=0,
+        allowed_type_column='portal_type', 
+        multiValued=1,
         relationship='ind_object_range',
     ),
     ReferenceField(
@@ -55,14 +55,14 @@ schema = Schema((
             label_msgid='OntoEditor_label_objectProperty',
             i18n_domain='OntoEditor',
         ),
-        allowed_types=('ObjectProperty',),
-        multiValued=0,
+        allowed_types=[],
+        multiValued=1,
         relationship='ind_object_property',
     ),
 
 ),
 )
-
+#allowed_types=('OntoIndividual', 'OntoClass','Ontology','TextContent'),
 ##code-section after-local-schema #fill in your manual code here
 ##/code-section after-local-schema
 
@@ -109,12 +109,14 @@ class IndObjectProperty(BaseContent, BrowserDefaultMixin):
              }
        # вставляем имя объектного свойства, если существует
        tmp = self.getObjectProperty()
-       if ( tmp is not None ):
-           res['object_property'] = tmp.getName()
+       #pdb.set_trace()
+       #print 'tmp=', tmp
+       if (tmp):
+           res['object_property'] = tmp[0].getName()
        # вставляем имя рэнжа, если существует
        tmp = self.getRange()
-       if ( tmp is not None ):
-           res['range'] = tmp.getName()
+       if ( tmp):
+           res['range'] = tmp[0].getName()
        # возвращаем информацию о развязке объектного свойства между индивидами
        return res
 

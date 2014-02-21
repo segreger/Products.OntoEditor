@@ -8,6 +8,24 @@
 
    <browser:page
      for="*"
+     name="getjson"
+     class="Products.OntoEditor.browser.OntoEditor.ontoutility.OntoJSON"
+     permission="zope2.View"
+     /> 	  
+  <browser:page
+     for="*"
+     name="listontoitem"
+     class="Products.OntoEditor.browser.OntoEditor.listontoitem_view.listontoitem_view"
+     permission="zope2.View"
+     />	 
+   <browser:page
+     for="*"
+     name="base"
+     template="templates/base.html"
+     permission="zope2.View"
+     />		   
+   <browser:page
+     for="*"
      name="gene_view"
      class="Products.OntoEditor.browser.OntoEditor.GeneView.gene_view"
 	 template="templates/gene_view.pt"
@@ -22,8 +40,8 @@
      />
    <browser:page
      for="*"
-     name="taskmanager"
-     class="Products.OntoEditor.browser.OntoEditor.TaskManager.TaskManager"
+     name="treemanager"
+     class="Products.OntoEditor.browser.OntoEditor.TreeManager.TreeManager"
      permission="zope2.View"
      />	 
    <browser:page
@@ -93,13 +111,13 @@
   <browser:page
      for="*"
      name="ind_add"
-     class="Products.OntoEditor.browser.OntoEditor.ind_add.ind_add"
+     class="Products.OntoEditor.browser.OntoEditor.ind_operation.ind_add"
      permission="zope2.View"
      />
   <browser:page
      for="*"
      name="ind_view"
-     class="Products.OntoEditor.browser.OntoEditor.ind_add.ind_view"
+     class="Products.OntoEditor.browser.OntoEditor.ind_operation.ind_view"
      template="templates/ind_view.pt"
      permission="zope2.View"
      />
@@ -112,16 +130,54 @@
      />
   <browser:page
      for="*"
+     name="class_add"
+     class="Products.OntoEditor.browser.OntoEditor.class_operation.class_add"
+     template="templates/class_add.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="allclass_view"
+     class="Products.OntoEditor.browser.OntoEditor.class_operation.class_view"
+     template="templates/allclass_view.pt"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="subclass_add"
+     class="Products.OntoEditor.browser.OntoEditor.class_operation.subclass_add"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
+     name="class_to_component_view"
+     class="Products.OntoEditor.browser.OntoEditor.class_to_component_view.class_to_component_view"
+     template="templates/class_to_component_view.pt"
+     permission="zope2.View"
+     />
+  <browser:page
+     for="*"
      name="class_backref"
      class="Products.OntoEditor.browser.OntoEditor.class_operation.class_view"
      template="templates/class_backref.pt"
      permission="zope2.View"
      />
-
+  <browser:page
+     for="*"
+     name="onto_tab"
+     class="Products.OntoEditor.browser.OntoEditor.ontoeditor_tab.ontoeditor_tab"
+     permission="zope2.View"
+     />
+	 
   <browser:resourceDirectory
      name="ontoeditor.templates"
      directory="templates"
      /> 
+  <browser:resourceDirectory
+      name="ontoeditor.icons"
+      directory="icons"
+      />
   <browser:resourceDirectory
      name="ontoeditor.css"
      directory="css"
@@ -229,21 +285,29 @@
      name="OntologyManager.js"
      file="js/OntologyManager.js"
      />
-  
+  <browser:resource
+     name="TreeManager.js"
+     file="js/TreeManager.js"
+     />  
+
+<!--  <browser:resource
+     name="treeUtility.js"
+     file="js/treeUtility.js"
+     />  -->
 <!--- Stylesheets resurses**************************************************************** -->
   <browser:resource
      name="main.css"
      file="css/main.css"
      />
-  <browser:resource
-     name="ind_add.css"
-     file="stylesheets/ind_add.css"
-     />
+
   <browser:resourceDirectory
 	 name="ontoeditor.stylesheets"
 	 directory="stylesheets"
 	 /> 
-
+  <browser:resource
+     name="ind_add.css"
+     file="stylesheets/ind_add.css"
+     />
  
  
 <!---Image resurses **************************************************************************-->
@@ -256,6 +320,10 @@
   <browser:resource
      name="OntologyManager.css"
      file="stylesheets/OntologyManager.css"
+     />
+  <browser:resource
+     name="TreeManager.css"
+     file="stylesheets/TreeManager.css"
      />
   <browser:resource
      name="jstree.css"
@@ -299,6 +367,22 @@
 	 <browser:resource
      name="DataProperty.png"
      file="images/DataProperty.png"
+     />
+	 <browser:resource
+     name="ClassObjectProperty.png"
+     file="images/ClassObjectProperty.png"
+     />
+	 <browser:resource
+     name="ClassDataProperty.png"
+     file="images/ClassDataProperty.png"
+     />
+   <browser:resource
+     name="IndObjectProperty.png"
+     file="images/IndObjectProperty.png"
+     />
+   <browser:resource
+     name="IndDataProperty.png"
+     file="images/IndDataProperty.png"
      />
 	 <browser:resource
      name="ind.gif"

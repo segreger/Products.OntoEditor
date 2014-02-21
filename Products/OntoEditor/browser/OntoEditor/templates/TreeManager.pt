@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+	<div metal:fill-slot="main">
+	    <link href ="++resource++TreeManager.css" rel="stylesheet" type="text/css" />
+		<!--<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/_docs/syntax/!script.js"></script>-->
+		<!--<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/jquery.jstree.js"></script>-->
+		<script type="text/javascript" src="++resource++jstree.js"></script> 
+		<script src="++resource++TreeManager.js" class="source below" type="text/javascript"></script>
+		
+		
+		
+		
+		
+		<h1>Tree Manager</h1>
+
+
+		
+		<div id="ontology">
+		<!--
+			<div id="ontologyTabs">
+				<ul>
+					<li><a href="javascript:void(0);" id="tab_ontologyClasses" class="ontologyTab"><span>Classes</span></a></li>
+					<li><a href="javascript:void(0);" id="tab_ontologyProperties" class="ontologyTab"><span>Properties</span></a></li>
+					<li><a href="javascript:void(0);" id="tab_ontologyIndividuals" class="ontologyTab"><span>Individuals</span></a></li>
+				</ul>
+			</div>
+			
+			<div class="clr">,jjjjjj</div>
+			<div id="ontologyActions">
+				<ul class="actionsMenu" id="ontologyClassesActions" style="display:block;">
+					<li><a href="createObject?type_name=OntoClass" target="blank" class="ontoAdd">Add Class</a></li>
+				</ul>
+				<ul class="actionsMenu" id="ontologyPropertiesActions">
+					<li><a href="createObject?type_name=ObjectProperty" target="blank" class="ontoAdd">ObjectProperty</a></li>
+					<li><a href="createObject?type_name=DataProperty" target="blank" class="ontoAdd">DataProperty</a></li>
+				</ul>
+				<ul class="actionsMenu" id="ontologyIndividualsActions">
+					<li><a href="createObject?type_name=OntoIndividual" target="blank" class="ontoAdd">Add Individual</a></li>
+				</ul>
+			</div> -->
+			<a id="ex" href="Plone/nashi-proekty/ontofolder/elearn/learncurse/@@class_add" class="item-tree" title="tree" i18n:attributes="title"><span i18n:translate="">Tree</span></a>
+			<table>
+				<tr>
+					<td>
+						<div class="ontologyTree" id="ontologyClassesTree">
+							Дерево классов
+						</div>
+					</td>
+					<td><div id="panel1">,m,m,m,m,m,m,m,m,</div>
+					</td>
+					<td>
+						<div class="ontologyTree" id="ontologyClassesTree1">
+							Дерево классов
+						</div>
+					</td>
+				</tr>
+            </table>
+			
+		</div>
+		
+
+		<!--<script src="++resource++TreeManager.js" class="source below" type="text/javascript"></script> -->
+		<br />
+	</div>
+</body>
+</html>

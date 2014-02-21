@@ -1,6 +1,6 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 	  
 <metal:javascriptslot fill-slot="javascript_head_slot">
@@ -31,7 +31,7 @@ jq(document).ready(function(){
 		<li tal:repeat="item list_s"><a  tal:attributes="href python:(item.absolute_url()+'/owlselect?ontouid='+str(item.UID()))" tal:content="python:item.title_or_id()" >item_content</a></li>
 	</ul>
 </div>
-<hr />
+
 
 <div id="owlclasslist" tal:condition="request/ontouid|nothing" tal:define="m request/ontouid|nothing; rel_list python:view.container_content(m)">
 <ul>

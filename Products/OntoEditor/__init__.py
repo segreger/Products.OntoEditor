@@ -44,6 +44,9 @@ def initialize(context):
     import ClassObjectProperty
     import ClassDataProperty
     import ClassToIndObjectProperty
+    import class_utility
+    
+
     # Initialize portal content
     all_content_types, all_constructors, all_ftis = process_types(
         listTypes(PROJECTNAME),

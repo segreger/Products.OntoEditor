@@ -26,7 +26,7 @@ from zope.interface import implements
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 import json
 from Products.CMFCore.utils import getToolByName
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager
